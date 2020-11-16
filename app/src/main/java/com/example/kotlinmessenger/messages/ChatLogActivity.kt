@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.kotlinmessenger.R
 import com.example.kotlinmessenger.models.ChatMessage
 import com.example.kotlinmessenger.models.User
-import com.example.kotlinmessenger.groupie.ChatFromItem
-import com.example.kotlinmessenger.groupie.ChatToItem
+import com.example.kotlinmessenger.groupie.chat.ChatFromItem
+import com.example.kotlinmessenger.groupie.chat.ChatToItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.xwray.groupie.GroupAdapter
@@ -52,9 +52,19 @@ class ChatLogActivity : AppCompatActivity() {
                 val chatMessage = snapshot.getValue(ChatMessage::class.java) ?: return
                 val currentUser = LatestMessagesActivity.currentUser ?: return
                 if(chatMessage?.fromId == FirebaseAuth.getInstance().uid) {
-                    adapter.add(ChatToItem(chatMessage?.text.toString(), currentUser))
+                    adapter.add(
+                        ChatToItem(
+                            chatMessage?.text.toString(),
+                            currentUser
+                        )
+                    )
                 } else {
-                    adapter.add(ChatFromItem(chatMessage?.text.toString(), toUser!!))
+                    adapter.add(
+                        ChatFromItem(
+                            chatMessage?.text.toString(),
+                            toUser!!
+                        )
+                    )
                 }
             }
             override fun onCancelled(error: DatabaseError) {

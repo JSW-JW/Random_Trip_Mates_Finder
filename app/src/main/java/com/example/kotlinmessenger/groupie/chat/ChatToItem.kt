@@ -1,4 +1,4 @@
-package com.example.kotlinmessenger.groupie
+package com.example.kotlinmessenger.groupie.chat
 
 import com.example.kotlinmessenger.R
 import com.example.kotlinmessenger.models.User
