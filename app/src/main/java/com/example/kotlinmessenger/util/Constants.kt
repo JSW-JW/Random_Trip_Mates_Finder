@@ -20,6 +20,8 @@ class Constants {
             "takeaway",
             "cafes"
         )
+
+        const val API_KEY = "46cb92b514f86a231fbedce8bba88783"
     }
 
 }
