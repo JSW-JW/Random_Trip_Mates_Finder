@@ -1,10 +1,10 @@
-package com.example.kotlinmessenger.auth
+package com.example.kotlinmessenger.view.auth
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.kotlinmessenger.messages.LatestMessagesActivity
+import com.example.kotlinmessenger.view.chat.LatestMessagesActivity
 import com.example.kotlinmessenger.R
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*

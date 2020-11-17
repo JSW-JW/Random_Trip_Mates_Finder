@@ -12,8 +12,8 @@ object ServiceGenerator {
         .baseUrl(Constants.BASE_URL)
         .build()
 
-    val retrofitService: ApiService by lazy {
-        retrofit.create(ApiService::class.java)
+    val retrofitService: RestaurantApi by lazy {
+        retrofit.create(RestaurantApi::class.java)
     }
 
 

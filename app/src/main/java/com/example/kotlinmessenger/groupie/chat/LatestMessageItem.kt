@@ -1,7 +1,8 @@
-package com.example.kotlinmessenger.views
+package com.example.kotlinmessenger.groupie.chat
 
+import android.content.Context
+import com.bumptech.glide.Glide
 import com.example.kotlinmessenger.R
-import com.example.kotlinmessenger.messages.ChatLogActivity
 import com.example.kotlinmessenger.models.ChatMessage
 import com.example.kotlinmessenger.models.User
 import com.google.firebase.auth.FirebaseAuth
@@ -9,12 +10,11 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.latest_message_row.view.*
 
-class LatestMessageRow(val chatMessage: ChatMessage): Item<GroupieViewHolder>(
+class LatestMessageItem(val chatMessage: ChatMessage, val context: Context): Item<GroupieViewHolder>(
 
 ) {
     var chatPartner : User? = null
@@ -36,7 +36,7 @@ class LatestMessageRow(val chatMessage: ChatMessage): Item<GroupieViewHolder>(
                 viewHolder.itemView.username_latest.text = chatPartner?.username
 
                 val targetImageView = viewHolder.itemView.image_view_Latest
-                Picasso.get().load(chatPartner?.profileImageUrl).into(targetImageView)
+                Glide.with(context).load(chatPartner?.profileImageUrl).into(targetImageView)
             }
         })
         viewHolder.itemView.message_latest.text = chatMessage.text

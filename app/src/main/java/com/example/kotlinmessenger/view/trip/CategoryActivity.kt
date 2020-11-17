@@ -1,6 +1,5 @@
-package com.example.kotlinmessenger.trip
+package com.example.kotlinmessenger.view.trip
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -22,7 +21,6 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.coroutines.CoroutineContext
 
 class CategoryActivity : AppCompatActivity(), CategoryListener {
     companion object {
@@ -48,7 +46,8 @@ class CategoryActivity : AppCompatActivity(), CategoryListener {
                     Constants.DEFAULT_SEARCH_CATEGORIES[i],
                     Constants.DEFAULT_SEARCH_CATEGORIES_ID[i],
                     Restaurant(name = Constants.DEFAULT_SEARCH_CATEGORY_IMAGES[i]),
-                    this
+                    this,
+                    this@CategoryActivity
                 )
             )
         }

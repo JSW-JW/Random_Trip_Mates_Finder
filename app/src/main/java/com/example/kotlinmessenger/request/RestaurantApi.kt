@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
 
-interface ApiService {
+interface RestaurantApi {
 
     //   /search?category=3
     @Headers("${Constants.HEADER_KEY}: ${Constants.API_KEY}")

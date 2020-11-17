@@ -1,4 +1,4 @@
-package com.example.kotlinmessenger.auth
+package com.example.kotlinmessenger.view.auth
 
 import android.app.Activity
 import android.content.Intent
@@ -9,7 +9,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
-import com.example.kotlinmessenger.messages.LatestMessagesActivity
+import com.example.kotlinmessenger.view.chat.LatestMessagesActivity
 import com.example.kotlinmessenger.R
 import com.example.kotlinmessenger.models.User
 import com.google.firebase.auth.FirebaseAuth

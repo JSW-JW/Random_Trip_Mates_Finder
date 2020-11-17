@@ -1,4 +1,4 @@
-package com.example.kotlinmessenger.messages
+package com.example.kotlinmessenger.view.chat
 
 import android.os.Bundle
 import android.util.Log

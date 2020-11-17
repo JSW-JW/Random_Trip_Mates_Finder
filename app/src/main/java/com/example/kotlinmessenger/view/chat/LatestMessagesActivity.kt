@@ -1,4 +1,4 @@
-package com.example.kotlinmessenger.messages
+package com.example.kotlinmessenger.view.chat
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,11 +8,11 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.kotlinmessenger.R
-import com.example.kotlinmessenger.messages.NewMessageActivity.Companion.USER_KEY
+import com.example.kotlinmessenger.view.chat.NewMessageActivity.Companion.USER_KEY
 import com.example.kotlinmessenger.models.User
-import com.example.kotlinmessenger.auth.RegisterActivity
+import com.example.kotlinmessenger.view.auth.RegisterActivity
 import com.example.kotlinmessenger.models.ChatMessage
-import com.example.kotlinmessenger.views.LatestMessageRow
+import com.example.kotlinmessenger.groupie.chat.LatestMessageItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.xwray.groupie.GroupAdapter
@@ -46,7 +46,7 @@ class LatestMessagesActivity : AppCompatActivity() {
     private fun setAdapterOnClicks() {
         adapter.setOnItemClickListener { item, view ->
 
-            val userItem = item as LatestMessageRow
+            val userItem = item as LatestMessageItem
             val chatPartner = userItem.chatPartner
 
             val intent = Intent(this, ChatLogActivity::class.java)
@@ -60,7 +60,12 @@ class LatestMessagesActivity : AppCompatActivity() {
     private fun refreshRecyclerViewMessages() {
         adapter.clear()
         latestMessageMap.values.forEach {
-            adapter.add(LatestMessageRow(it))
+            adapter.add(
+                LatestMessageItem(
+                    it,
+                    this@LatestMessagesActivity
+                )
+            )
         }
     }
 

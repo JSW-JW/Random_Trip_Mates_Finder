@@ -1,4 +1,4 @@
-package com.example.kotlinmessenger.messages
+package com.example.kotlinmessenger.view.chat
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
