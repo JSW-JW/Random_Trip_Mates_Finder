@@ -8,7 +8,7 @@ import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.category_list_item_layout.view.*
 
-class CategoryItem(private val text: String, private val restaurant: Restaurant, val categoryListener: CategoryListener) : Item<GroupieViewHolder>() {
+class CategoryItem(private val text: String, private val category_id: Int, private val restaurant: Restaurant, val categoryListener: CategoryListener) : Item<GroupieViewHolder>() {
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.category_title.text = text
@@ -17,7 +17,8 @@ class CategoryItem(private val text: String, private val restaurant: Restaurant,
         Picasso.get().load(path).into(targetImageView)
 
         viewHolder.itemView.setOnClickListener {
-            categoryListener.onCategoryClick(position)
+            categoryListener.onCategoryClick(category_id)
+
         }
     }
 
