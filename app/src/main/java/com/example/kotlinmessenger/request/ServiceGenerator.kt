@@ -1,21 +1,20 @@
 package com.example.kotlinmessenger.request
 
-import com.google.gson.Gson
+
+import com.example.kotlinmessenger.util.Constants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ServiceGenerator() {
+object ServiceGenerator {
 
-    private val retrofitBuilder: Retrofit.Builder = Retrofit.Builder()
+    private val retrofit: Retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl("https://developers.zomato.com/api/v2.1")
+        .baseUrl(Constants.BASE_URL)
+        .build()
 
-    private val retrofit = retrofitBuilder.build()
+    val retrofitService: ApiService by lazy {
+        retrofit.create(ApiService::class.java)
+    }
 
-    private var apiService = retrofit.create(ApiService::class.java)
 
-    val restaurantApi: ApiService
-        get() {
-            return apiService
-        }
 }
