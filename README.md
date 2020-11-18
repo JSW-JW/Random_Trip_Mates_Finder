@@ -5,13 +5,13 @@
 * Recommend you do enough chat before you meet them if you can't trust them yet.
 
 # EndPoint that will be used and overall flow
-* At the first view, you can choose CategoryActivity or CityActivity.
-* Main Activity separates with two parts. 1. CategoryActivity & 2. CityActivity. When the category is clicked, it executes the "/search" query.
+* RestaurantListActivity is the main activity, it shifts between CategoryViewHolder or CityViewHolder.
+* Main Activity separates with two parts. 1. CategoryViewHolder & 2. CityViewHolder. When their item(categoryListItem or cityListItem) is clicked, it executes the "/search" or "/collection" query.
 
-1. (CategoryActivity) "/search" is used. (there are many options, but in this app with category id input, show the restaurants list related with the category)
-2. (CityActivity) "/collections" is used. (with city id input, show several collections in the city)
+1. (CategoryViewHolder) "/search" is used. (there are many options, but in this app with category id input, show the restaurants list related with the category)
+2. (CityViewHolder) "/collections" is used. (with city id input, show several collections in the city)
 
-* (CategoryActivity/CityActivity) --> When restaurant is clicked --> (RestaurantActivity) "/restaurant" is used. (with restaurant id input, show restaurant detailed information)
+* RestaurantListActivity (CategoryViewHolder/CityViewHolder) --> (RestaurantsListViewHolder) --> When restaurant is clicked --> (RestaurantActivity) "/restaurant" is used. (with restaurant id input, show restaurant detailed information)
 
 
 # Features which are gonna be added later
