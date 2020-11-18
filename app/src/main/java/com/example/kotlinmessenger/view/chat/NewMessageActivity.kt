@@ -42,7 +42,8 @@ class NewMessageActivity : AppCompatActivity() {
                     if(user != null) {
                         adapter.add(
                             UserItem(
-                                user
+                                user,
+                                this@NewMessageActivity
                             )
                         )
                     }

@@ -55,14 +55,16 @@ class ChatLogActivity : AppCompatActivity() {
                     adapter.add(
                         ChatToItem(
                             chatMessage?.text.toString(),
-                            currentUser
+                            currentUser,
+                            this@ChatLogActivity
                         )
                     )
                 } else {
                     adapter.add(
                         ChatFromItem(
                             chatMessage?.text.toString(),
-                            toUser!!
+                            toUser!!,
+                            this@ChatLogActivity
                         )
                     )
                 }

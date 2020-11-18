@@ -1,6 +1,6 @@
 package com.example.kotlinmessenger.request
 
-import com.example.kotlinmessenger.models.Response
+import com.example.kotlinmessenger.models.SearchResponse
 import com.example.kotlinmessenger.util.Constants
 import retrofit2.Call
 import retrofit2.http.GET
@@ -14,5 +14,5 @@ interface RestaurantApi {
     @GET("search")
     fun searchWithCategory(
         @Query("category") category: Int?
-    ): Call<Response>
+    ): Call<SearchResponse>
 }

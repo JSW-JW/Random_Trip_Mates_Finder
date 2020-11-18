@@ -56,9 +56,9 @@ class CategoryActivity : AppCompatActivity(), CategoryListener {
 
     override fun onCategoryClick(categoryId: Int) {
         ServiceGenerator.retrofitService.searchWithCategory(categoryId)
-            .enqueue(object : Callback<com.example.kotlinmessenger.models.Response> {
+            .enqueue(object : Callback<com.example.kotlinmessenger.models.SearchResponse> {
                 override fun onFailure(
-                    call: Call<com.example.kotlinmessenger.models.Response>,
+                    call: Call<com.example.kotlinmessenger.models.SearchResponse>,
                     t: Throwable
                 ) {
                     CoroutineScope(Main).launch {
@@ -69,8 +69,8 @@ class CategoryActivity : AppCompatActivity(), CategoryListener {
 
 
                 override fun onResponse(
-                    call: Call<com.example.kotlinmessenger.models.Response>,
-                    response: Response<com.example.kotlinmessenger.models.Response>
+                    call: Call<com.example.kotlinmessenger.models.SearchResponse>,
+                    response: Response<com.example.kotlinmessenger.models.SearchResponse>
                 ) {
                     if (response.isSuccessful) {
                         /* for(restaurant in response.body()?.restaurants!!)
