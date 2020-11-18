@@ -17,4 +17,8 @@ class RestaurantRepository(context: Context) {
 
     }
 
+    fun searchRestaurantApi(){
+
+    }
+
 }
