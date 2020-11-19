@@ -55,7 +55,7 @@ class CategoryActivity : AppCompatActivity(), CategoryListener {
     }
 
     override fun onCategoryClick(categoryId: Int) {
-        ServiceGenerator.retrofitService.searchWithCategory(categoryId)
+        ServiceGenerator.retrofitService.searchByCategory(categoryId)
             .enqueue(object : Callback<com.example.kotlinmessenger.models.SearchResponse> {
                 override fun onFailure(
                     call: Call<com.example.kotlinmessenger.models.SearchResponse>,
@@ -64,7 +64,7 @@ class CategoryActivity : AppCompatActivity(), CategoryListener {
                     CoroutineScope(Main).launch {
                         Toast.makeText(this@CategoryActivity, "Failed to retrieve data. please check network connection.", Toast.LENGTH_SHORT).show()
                     }
-                    Log.d(TAG, "onFailure: ${t}")
+                    Log.d(TAG, "onFailure: $t")
                 }
 
 

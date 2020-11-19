@@ -12,7 +12,14 @@ interface RestaurantApi {
     //   /search?category=3
     @Headers("${Constants.HEADER_KEY}: ${Constants.API_KEY}")
     @GET("search")
-    fun searchWithCategory(
+    fun searchByCategory(
         @Query("category") category: Int?
+    ): Call<SearchResponse>
+
+    @Headers("${Constants.HEADER_KEY}: ${Constants.API_KEY}")
+    @GET("search")
+    fun searchByCity(
+        @Query("entity_id") cityId: Int,
+        @Query("entity_type") entityType: String
     ): Call<SearchResponse>
 }

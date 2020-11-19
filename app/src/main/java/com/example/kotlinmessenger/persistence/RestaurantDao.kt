@@ -8,21 +8,25 @@ import com.example.kotlinmessenger.models.Restaurant
 interface RestaurantDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE) // not replace the object with new one.
-    fun insertRecipes(vararg restaurants: Restaurant?): LongArray?
+    fun insertRestaurants(vararg restaurants: Restaurant?): LongArray?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE) // replace the object with new one.
-    fun insertRecipe(restaurant: Restaurant?)
+    fun insertRestaurant(restaurant: Restaurant?)
 
     @Update
     fun updateRestaurants(vararg restaurant: Restaurant) // TODO: search how to access particular class and field(if embedded annotation, cannot access the class itself.
 
     @Query("SELECT * FROM restaurants WHERE city LIKE '%' || :query || '%'")
-    fun searchWithCities(
+    fun searchByCity(
         query: String?,
         pageNumber: Int
     ): LiveData<List<Restaurant?>?>?
 
+    @Query("SELECT * FROM restaurants WHERE ")
+    fun searchByCategory(restaurant_id: String?): LiveData<List<Restaurant?>?>?
+
     @Query("SELECT * FROM restaurants WHERE res_id = :restaurant_id")
-    fun getRestaurants(restaurant_id: String?): LiveData<Restaurant?>?
+    fun getRestaurant(restaurant_id: String?): LiveData<Restaurant?>?
+
 
 }
