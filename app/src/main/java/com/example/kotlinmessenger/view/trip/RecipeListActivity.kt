@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinmessenger.R
-import com.example.kotlinmessenger.groupie.trip.CategoryItem
+import com.example.kotlinmessenger.groupie.trip.CategoryListItem
 import com.example.kotlinmessenger.groupie.trip.CategoryListener
 import com.example.kotlinmessenger.groupie.trip.RestaurantItemDecoration
 import com.example.kotlinmessenger.groupie.trip.RestaurantListItem
@@ -24,7 +24,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CategoryActivity : AppCompatActivity(), CategoryListener {
+class RecipeListActivity : AppCompatActivity(), CategoryListener {
     companion object {
         private const val TAG = "CategoryActivity"
 
@@ -44,12 +44,12 @@ class CategoryActivity : AppCompatActivity(), CategoryListener {
         recycler_view.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         for (i in Constants.DEFAULT_SEARCH_CATEGORIES.indices) {
             mAdapter.add(
-                CategoryItem(
+                CategoryListItem(
                     Constants.DEFAULT_SEARCH_CATEGORIES[i],
                     Constants.DEFAULT_SEARCH_CATEGORIES_ID[i],
                     Restaurant(name = Constants.DEFAULT_SEARCH_CATEGORY_IMAGES[i]),
                     this,
-                    this@CategoryActivity
+                    this@RecipeListActivity
                 )
             )
         }
@@ -64,7 +64,7 @@ class CategoryActivity : AppCompatActivity(), CategoryListener {
                     t: Throwable
                 ) {
                     CoroutineScope(Main).launch {
-                        Toast.makeText(this@CategoryActivity, "Failed to retrieve data. please check network connection.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@RecipeListActivity, "Failed to retrieve data. please check network connection.", Toast.LENGTH_SHORT).show()
                     }
                     Log.d(TAG, "onFailure: $t")
                 }
@@ -83,7 +83,7 @@ class CategoryActivity : AppCompatActivity(), CategoryListener {
                                 for (restaurant in response.body()!!.restaurants) {
                                     Log.d(TAG, "onResponse: $restaurant")
                                     recycler_view.addItemDecoration(RestaurantItemDecoration(2))
-                                    mAdapter.add(RestaurantListItem(restaurant, this@CategoryActivity))
+                                    mAdapter.add(RestaurantListItem(restaurant, this@RecipeListActivity))
                                     mAdapter.notifyDataSetChanged()
                                 }
                             }

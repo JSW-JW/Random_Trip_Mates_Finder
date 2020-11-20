@@ -18,6 +18,9 @@ data class Restaurant(
     @Embedded val r: R = R(),
 
     @ColumnInfo(name = "id")
+    @SerializedName("id") var category_id: Int = 0,
+
+    @ColumnInfo(name = "id")
     @SerializedName("id") val id: String = "",
 
     @ColumnInfo(name = "name")
@@ -28,13 +31,13 @@ data class Restaurant(
     @Embedded val location: Location = Location(),
 
     @ColumnInfo(name = "cuisines")
-    @SerializedName("cuisines") val cuisines: String = "",
+    @SerializedName("cuisines") val cuisines: String = "", // TODO: Remove Field
 
     @ColumnInfo(name = "timings")
     @SerializedName("timings") val timings: String = "",
 
     @ColumnInfo(name = "average_cost_for_two")
-    @SerializedName("average_cost_for_two") val average_cost_for_two: String = "",
+    @SerializedName("average_cost_for_two") val average_cost_for_two: String = "", // TODO: Remove Field
 
     @ColumnInfo(name = "price_range")
     @SerializedName("price_range") val price_range: String = "",
@@ -43,14 +46,14 @@ data class Restaurant(
     @SerializedName("currency") val currency: String= "",
 
     @ColumnInfo(name = "highlights")
-    @SerializedName("highlights") val highlights: List<String> = ArrayList(),
+    @SerializedName("highlights") val highlights: List<String> = ArrayList(), // TODO: Remove Field
 
     @ColumnInfo(name = "offers")
-    @SerializedName("offers") val offers: List<String> = ArrayList(),
+    @SerializedName("offers") val offers: List<String> = ArrayList(), // TODO: Remove Field
 
     @ColumnInfo(name = "user_rating")
     @SerializedName("user_rating")
-    @Embedded val user_rating: User_rating = User_rating(),
+    @Embedded val user_rating: User_rating = User_rating(), // TODO: Remove Field
 
     @ColumnInfo(name = "thumb")
     @SerializedName("thumb")
@@ -66,7 +69,7 @@ data class Restaurant(
     @SerializedName("is_table_reservation_supported") val is_table_reservation_supported: String = "",
 
     @ColumnInfo(name = "phone_numbers")
-    @SerializedName("phone_numbers") val phone_numbers: String = ""
+    @SerializedName("phone_numbers") val phone_numbers: String = "" // TODO: Remove Field
 ) {
     data class R(
         @ColumnInfo(name = "res_id")

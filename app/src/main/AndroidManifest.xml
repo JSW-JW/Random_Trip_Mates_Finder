@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".view.trip.RestaurantActivity"></activity>
-        <activity android:name=".view.trip.CategoryActivity">
+        <activity android:name=".view.trip.RecipeListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

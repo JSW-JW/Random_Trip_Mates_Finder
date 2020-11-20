@@ -18,10 +18,14 @@ class RestaurantRepository(context: Context) {
         return instance as RestaurantRepository
     }
 
-    fun searchByCategory(): LiveData<Resource<List<Restaurant>?>?>? {
+    fun searchByCategory(category_id: Int): LiveData<Resource<List<Restaurant>?>?>? {
         return object: NetworkBoundResource<List<Restaurant>, RestaurantListResponse>() {
             override fun saveCallResult(item: RestaurantListResponse) {
-                TODO("Not yet implemented")
+                if(item.getRestaurants != null) {
+                    for (restaurant in item.getRestaurants!!) {
+                        restaurant.restaurant.category_id = category_id
+                    }
+                }
             }
 
             override fun shouldFetch(data: List<Restaurant>?): Boolean {
