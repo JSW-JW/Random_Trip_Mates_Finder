@@ -1,9 +1,6 @@
 package com.example.kotlinmessenger.request
 
-
-import com.example.kotlinmessenger.request.response.CustomInterceptor
 import com.example.kotlinmessenger.util.Constants
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

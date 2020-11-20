@@ -9,23 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.kotlinmessenger.view.trip.CategoryActivity">
+        <activity android:name=".view.trip.RestaurantActivity"></activity>
+        <activity android:name=".view.trip.CategoryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.kotlinmessenger.view.chat.LatestMessagesActivity">
-        </activity>
-        <activity android:name="com.example.kotlinmessenger.view.auth.RegisterActivity" />
-        <activity android:name="com.example.kotlinmessenger.view.auth.LoginActivity" />
-        <activity android:name="com.example.kotlinmessenger.view.chat.NewMessageActivity">
+        <activity android:name=".view.chat.LatestMessagesActivity"></activity>
+        <activity android:name=".view.auth.RegisterActivity" />
+        <activity android:name=".view.auth.LoginActivity" />
+        <activity android:name=".view.chat.NewMessageActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.kotlinmessenger.view.chat.LatestMessagesActivity" />
         </activity>
-        <activity android:name="com.example.kotlinmessenger.view.chat.ChatLogActivity">
+        <activity android:name=".view.chat.ChatLogActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.kotlinmessenger.view.chat.LatestMessagesActivity" />

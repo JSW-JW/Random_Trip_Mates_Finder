@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinmessenger.R
 import com.example.kotlinmessenger.groupie.trip.CategoryItem
 import com.example.kotlinmessenger.groupie.trip.CategoryListener
+import com.example.kotlinmessenger.groupie.trip.RestaurantItemDecoration
+import com.example.kotlinmessenger.groupie.trip.RestaurantListItem
 import com.example.kotlinmessenger.models.Restaurant
 import com.example.kotlinmessenger.request.ServiceGenerator
 import com.example.kotlinmessenger.util.Constants
@@ -73,9 +75,19 @@ class CategoryActivity : AppCompatActivity(), CategoryListener {
                     response: Response<com.example.kotlinmessenger.models.SearchResponse>
                 ) {
                     if (response.isSuccessful) {
-                        /* for(restaurant in response.body()?.restaurants!!)
-                         Log.d(TAG, "onResponse: $restaurant")*/
                         Log.d(TAG, "onResponse: ${response.body()?.restaurants}")
+                        if(response.body() != null) {
+
+                            CoroutineScope(Main).launch {
+                                mAdapter.clear()
+                                for (restaurant in response.body()!!.restaurants) {
+                                    Log.d(TAG, "onResponse: $restaurant")
+                                    recycler_view.addItemDecoration(RestaurantItemDecoration(2))
+                                    mAdapter.add(RestaurantListItem(restaurant, this@CategoryActivity))
+                                    mAdapter.notifyDataSetChanged()
+                                }
+                            }
+                        }
                     }
                 }
 

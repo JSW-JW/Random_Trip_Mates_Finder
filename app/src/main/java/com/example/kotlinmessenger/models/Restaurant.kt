@@ -52,11 +52,15 @@ data class Restaurant(
     @SerializedName("user_rating")
     @Embedded val user_rating: User_rating = User_rating(),
 
+    @ColumnInfo(name = "thumb")
+    @SerializedName("thumb")
+    @Embedded val thumb: String? = "",
+
     @ColumnInfo(name = "all_reviews_count")
     @SerializedName("all_reviews_count") val all_reviews_count: String = "",
 
     @ColumnInfo(name = "featured_image")
-    @SerializedName("featured_image") val featured_image: String = "",
+    @SerializedName("featured_image") val featured_image: String? = "",
 
     @ColumnInfo(name = "is_table_reservation_supported")
     @SerializedName("is_table_reservation_supported") val is_table_reservation_supported: String = "",

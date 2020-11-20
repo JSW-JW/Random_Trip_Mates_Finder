@@ -3,5 +3,10 @@
 
     <dimen name="category_text_size">20sp</dimen>
     <dimen name="category_image_size">30dp</dimen>
+    <dimen name="restaurant_image_height">250dp</dimen>
+    <dimen name="restaurant_name_textSize">20sp</dimen>
+    <dimen name="restaurant_address_textSize">16sp</dimen>
+    <dimen name="restaurant_timing_textSize">16sp</dimen>
+    <dimen name="restaurant_currency_textSize">18sp</dimen>
 
 </resources>

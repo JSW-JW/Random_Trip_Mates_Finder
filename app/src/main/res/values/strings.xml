@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">KotlinMessenger</string>
+
+    <string name="currency">currency %s</string>
 </resources>
