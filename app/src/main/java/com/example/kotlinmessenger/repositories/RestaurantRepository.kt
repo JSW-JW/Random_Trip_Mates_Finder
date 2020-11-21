@@ -1,36 +1,49 @@
 package com.example.kotlinmessenger.repositories
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.kotlinmessenger.models.RestaurantSummary
 import com.example.kotlinmessenger.persistence.RestaurantDao
+import com.example.kotlinmessenger.persistence.RestaurantDatabase
 import com.example.kotlinmessenger.request.ServiceGenerator
 import com.example.kotlinmessenger.request.response.ApiResponse
 import com.example.kotlinmessenger.request.response.RestaurantListResponse
 import com.example.kotlinmessenger.util.Resource
 
-class RestaurantRepository(context: Context, val restaurantDao: RestaurantDao) {
+class RestaurantRepository(val context: Context) {
 
-    private var instance: RestaurantRepository? = null
+    var restaurantDao: RestaurantDao? = null
 
-    fun instance(context: Context): RestaurantRepository {
-        if (instance == null) {
-            instance = RestaurantRepository(context, restaurantDao)
-        }
-        return instance as RestaurantRepository
+    val TAG = "RestaurantRepository"
+
+    init {
+        restaurantDao = RestaurantDatabase.getInstance(context)?.restaurantDao()
+        Log.d(TAG, ": $restaurantDao")
     }
 
-    fun searchByCategoryId(category_id: Int): LiveData<Resource<List<RestaurantSummary>?>?>? {
+    companion object {
+        var instance: RestaurantRepository? = null
+        fun instance(context: Context): RestaurantRepository {
+            if (instance == null) {
+                instance = RestaurantRepository(context)
+            }
+            return instance as RestaurantRepository
+        }
+    }
+
+
+    fun searchByCategoryId(category_id: Int): LiveData<Resource<List<RestaurantSummary>?>?> {
+        Log.d(TAG, "searchByCity: Called")
         return object : NetworkBoundResource<List<RestaurantSummary>, RestaurantListResponse>() {
             override fun saveCallResult(item: RestaurantListResponse) {
                 if (item.getRestaurants != null) {
                     val recipes: Array<RestaurantSummary> = emptyArray()
                     for ((i, restaurantWrapper) in item.getRestaurants!!.withIndex()) {
                         restaurantWrapper.restaurant.category_id = category_id
-                        recipes?.set(i, restaurantWrapper.restaurant)
+                        recipes[i] = restaurantWrapper.restaurant
                     }
-
-                    restaurantDao.insertRestaurants(recipes)
+                    restaurantDao!!.insertRestaurants(recipes)
                 }
             }
 
@@ -39,7 +52,7 @@ class RestaurantRepository(context: Context, val restaurantDao: RestaurantDao) {
             }
 
             override fun loadFromDb(): LiveData<List<RestaurantSummary>?> {
-                return restaurantDao.searchByCategoryId(category_id)
+                return restaurantDao!!.searchByCategoryId(category_id)
             }
 
             override fun createCall(): LiveData<ApiResponse<RestaurantListResponse?>?> {
@@ -49,7 +62,7 @@ class RestaurantRepository(context: Context, val restaurantDao: RestaurantDao) {
         }.asLiveData
     }
 
-    fun searchByCity(): LiveData<Resource<List<RestaurantSummary>?>?>? {
+    fun searchByCity(): LiveData<Resource<List<RestaurantSummary>?>?> {
         return object : NetworkBoundResource<List<RestaurantSummary>, RestaurantListResponse>() {
             override fun saveCallResult(item: RestaurantListResponse) {
                 TODO("Not yet implemented")

@@ -17,14 +17,12 @@ data class RestaurantSummary(
     @ColumnInfo(name = "name")
     @SerializedName("name") val name: String = "",
 
-    @ColumnInfo(name = "R")
     @SerializedName("R")
     @Embedded val r: R = R(),
 
     @ColumnInfo(name = "category_id")
     @SerializedName("category_id") var category_id: Int = 0,
 
-    @ColumnInfo(name = "location")
     @SerializedName("location")
     @Embedded val location: Location = Location(),
 
@@ -43,11 +41,9 @@ data class RestaurantSummary(
     @ColumnInfo(name = "currency")
     @SerializedName("currency") val currency: String= "",
 
-    @ColumnInfo(name = "user_rating")
     @SerializedName("user_rating")
     @Embedded val user_rating: User_rating = User_rating(),
 
-    @ColumnInfo(name = "thumb")
     @SerializedName("thumb")
     @Embedded val thumb: String? = "",
 

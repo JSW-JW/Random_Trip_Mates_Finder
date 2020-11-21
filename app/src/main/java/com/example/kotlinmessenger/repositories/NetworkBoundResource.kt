@@ -21,27 +21,26 @@ abstract class NetworkBoundResource<CacheObject, RequestObject> {
     companion object {
         private val TAG: String? = "NetworkBoundResource"
     }
+    var results: MediatorLiveData<Resource<CacheObject?>?> = MediatorLiveData()
 
     init {
         init()
     }
 
-    private val results: MediatorLiveData<Resource<CacheObject?>?>? = MediatorLiveData()
-
     fun setValue(newValue: Resource<CacheObject?>?) {
-        if (results!!.value !== newValue) {
-            results!!.value = newValue
+        if (results.value !== newValue) {
+            results.value = newValue
         }
     }
 
     private fun init() {
 
         // update LiveData for loading status
-        setValue(loading(null))
+        results.value = loading(null)
 
         // observe LiveData source from local db
         val dbSource = loadFromDb()
-        results?.addSource(dbSource) { cacheObject ->
+        results.addSource(dbSource) { cacheObject ->
             results.removeSource(dbSource)
             if (shouldFetch(cacheObject)) {
                 // get data from the network
@@ -62,12 +61,12 @@ abstract class NetworkBoundResource<CacheObject, RequestObject> {
      * 5) begin observing local db again to see the refreshed data from network
      * @param dbSource
      */
-    private fun fetchFromNetwork(dbSource: LiveData<CacheObject?>?) {
+    private fun fetchFromNetwork(dbSource: LiveData<CacheObject?>) {
         Log.d(TAG, "fetchFromNetwork: called.")
 
         // update LiveData for loading status
-        results!!.addSource(
-            dbSource!!
+        results.addSource(
+            dbSource
         ) { cacheObject -> setValue(loading(cacheObject)) }
         val apiResponse: LiveData<ApiResponse<RequestObject?>?> = createCall()
         results.addSource(
@@ -152,7 +151,7 @@ abstract class NetworkBoundResource<CacheObject, RequestObject> {
 
     // Returns a LiveData object that represents the resource that's implemented
     // in the base class.
-    val asLiveData: LiveData<Resource<CacheObject?>?>?
+    val asLiveData: LiveData<Resource<CacheObject?>?>
         get() = results
 
 }

@@ -14,7 +14,7 @@ abstract class RestaurantDatabase : RoomDatabase() {
     private val mRestaurantDao: RestaurantDao? = null
 
     companion object {
-        const val DATABASE_NAME = "recipes_db"
+        const val DATABASE_NAME = "restaurants_db"
         private var instance: RestaurantDatabase? = null
         fun getInstance(context: Context): RestaurantDatabase? {
             if (instance == null) {
@@ -23,6 +23,7 @@ abstract class RestaurantDatabase : RoomDatabase() {
                     RestaurantDatabase::class.java,
                     DATABASE_NAME
                 ).build()
+
             }
             return instance
         }

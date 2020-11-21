@@ -22,12 +22,11 @@ import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.activity_category.*
 
 class RestaurantListActivity : BaseActivity(), CategoryListener {
-    companion object {
-        private const val TAG = "CategoryActivity"
 
-        private lateinit var mAdapter: GroupAdapter<GroupieViewHolder>
-        private var mRestaurantListViewModel: RestaurantListViewModel? = null
-    }
+    private val TAG = "CategoryActivity"
+    private lateinit var mAdapter: GroupAdapter<GroupieViewHolder>
+    private var mRestaurantListViewModel: RestaurantListViewModel? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +38,8 @@ class RestaurantListActivity : BaseActivity(), CategoryListener {
     }
 
     private fun provideViewModel() {
-        mRestaurantListViewModel = ViewModelProvider(this).get(RestaurantListViewModel::class.java)
+        mRestaurantListViewModel =
+            ViewModelProvider(this@RestaurantListActivity, RestaurantListViewModel.Factory(application)).get(RestaurantListViewModel::class.java)
     }
 
     private fun initRecyclerView() {
@@ -64,7 +64,7 @@ class RestaurantListActivity : BaseActivity(), CategoryListener {
             if (listResource != null) {
                 when (listResource.status) {
                     Resource.Status.SUCCESS -> {
-                        if(listResource.data != null) {
+                        if (listResource.data != null) {
                             mAdapter.clear()
                             for (restaurant in listResource.data) {
                                 Log.d(TAG, "onResponse: $restaurant")
@@ -80,7 +80,11 @@ class RestaurantListActivity : BaseActivity(), CategoryListener {
                         }
                     }
                     Resource.Status.ERROR -> {
-                        Toast.makeText(this@RestaurantListActivity, "Failed to retrieve data. please check network connection.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@RestaurantListActivity,
+                            "Failed to retrieve data. please check network connection.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                     Resource.Status.LOADING -> {
                         // Load animation from BaseActivity
