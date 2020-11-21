@@ -7,8 +7,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "restaurants")
-data class Restaurant(
+@Entity(tableName = "restaurant")
+data class RestaurantDetail(
     @PrimaryKey
     @NonNull
     val primaryKey: String? = "",
@@ -17,8 +17,8 @@ data class Restaurant(
     @SerializedName("R")
     @Embedded val r: R = R(),
 
-    @ColumnInfo(name = "id")
-    @SerializedName("id") var category_id: Int = 0,
+    @ColumnInfo(name = "category_id")
+    @SerializedName("category_id") var category_id: Int = 0,
 
     @ColumnInfo(name = "id")
     @SerializedName("id") val id: String = "",
@@ -31,13 +31,13 @@ data class Restaurant(
     @Embedded val location: Location = Location(),
 
     @ColumnInfo(name = "cuisines")
-    @SerializedName("cuisines") val cuisines: String = "", // TODO: Remove Field
+    @SerializedName("cuisines") val cuisines: String = "",
 
     @ColumnInfo(name = "timings")
     @SerializedName("timings") val timings: String = "",
 
     @ColumnInfo(name = "average_cost_for_two")
-    @SerializedName("average_cost_for_two") val average_cost_for_two: String = "", // TODO: Remove Field
+    @SerializedName("average_cost_for_two") val average_cost_for_two: String = "",
 
     @ColumnInfo(name = "price_range")
     @SerializedName("price_range") val price_range: String = "",
@@ -46,14 +46,14 @@ data class Restaurant(
     @SerializedName("currency") val currency: String= "",
 
     @ColumnInfo(name = "highlights")
-    @SerializedName("highlights") val highlights: List<String> = ArrayList(), // TODO: Remove Field
+    @SerializedName("highlights") val highlights: List<String> = ArrayList(),
 
     @ColumnInfo(name = "offers")
-    @SerializedName("offers") val offers: List<String> = ArrayList(), // TODO: Remove Field
+    @SerializedName("offers") val offers: List<String> = ArrayList(),
 
     @ColumnInfo(name = "user_rating")
     @SerializedName("user_rating")
-    @Embedded val user_rating: User_rating = User_rating(), // TODO: Remove Field
+    @Embedded val user_rating: User_rating = User_rating(),
 
     @ColumnInfo(name = "thumb")
     @SerializedName("thumb")
@@ -81,7 +81,7 @@ data class Restaurant(
         @Embedded val has_menu_status: Has_menu_status = Has_menu_status()
     )
 
-     data class Location(
+    data class Location(
         @ColumnInfo(name = "address")
         @SerializedName("address") val address: String = "",
         @ColumnInfo(name = "locality")
@@ -99,11 +99,6 @@ data class Restaurant(
         @ColumnInfo(name = "country_id")
         @SerializedName("country_id") val country_id: String = ""
     )
-
-
-   /* data class Title(
-        @SerializedName("text") val text: Double = 0.0
-    )*/    // parse error (type is wrong in the api data)
 
     data class User_rating(
         @ColumnInfo(name = "aggregate_rating")
@@ -135,7 +130,6 @@ data class Restaurant(
     )
 
     data class Rating_obj(
-        /*@SerializedName("title") val title: Title = Title(), type is wrong("-") in the api data, NumberFormatException */
         @ColumnInfo(name = "bg_color")
         @SerializedName("bg_color")
         @Embedded val bg_color: Bg_color = Bg_color()

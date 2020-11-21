@@ -5,9 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.kotlinmessenger.models.Restaurant
+import com.example.kotlinmessenger.models.RestaurantSummary
 
-@Database(entities = [Restaurant::class], version = 1)
+@Database(entities = [RestaurantSummary::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class RestaurantDatabase : RoomDatabase() {
 

@@ -73,7 +73,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="5dp"
                         android:textSize="@dimen/restaurant_address_textSize"
-                        android:id="@+id/restaurant_address" />
+                        android:id="@+id/restaurant_locality" />
 
                     <TextView
                         android:layout_width="0dp"
