@@ -1,6 +1,5 @@
 package com.example.kotlinmessenger.view.trip
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -14,7 +13,6 @@ import com.example.kotlinmessenger.groupie.trip.CategoryListener
 import com.example.kotlinmessenger.groupie.trip.RestaurantItemDecoration
 import com.example.kotlinmessenger.groupie.trip.RestaurantListItem
 import com.example.kotlinmessenger.models.RestaurantSummary
-import com.example.kotlinmessenger.request.ServiceGenerator
 import com.example.kotlinmessenger.util.Constants
 import com.example.kotlinmessenger.util.Resource
 import com.example.kotlinmessenger.view.BaseActivity
@@ -22,12 +20,6 @@ import com.example.kotlinmessenger.viewmodels.RestaurantListViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.activity_category.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class RestaurantListActivity : BaseActivity(), CategoryListener {
     companion object {
