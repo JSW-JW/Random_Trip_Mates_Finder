@@ -1,18 +1,17 @@
 package com.example.kotlinmessenger.models
 
 import androidx.annotation.NonNull
-import androidx.room.ColumnInfo
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.example.kotlinmessenger.R
+import com.example.kotlinmessenger.persistence.Converters
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "restaurants")
 data class RestaurantSummary(
-    @PrimaryKey
+
     @NonNull
-    val primaryKey: String? = "",
+    @PrimaryKey
+    val primaryKey: String = "",
 
     @ColumnInfo(name = "name")
     @SerializedName("name") val name: String = "",
@@ -44,8 +43,8 @@ data class RestaurantSummary(
     @SerializedName("user_rating")
     @Embedded val user_rating: User_rating = User_rating(),
 
-    @SerializedName("thumb")
-    @Embedded val thumb: String? = "",
+    @ColumnInfo(name = "thumb")
+    @SerializedName("thumb") val thumb: String? = "",
 
     @ColumnInfo(name = "featured_image")
     @SerializedName("featured_image") val featured_image: String? = "",
@@ -57,8 +56,8 @@ data class RestaurantSummary(
     data class R(
         @ColumnInfo(name = "res_id")
         @SerializedName("res_id") val res_id: Int = 0,
-        @ColumnInfo(name = "has_menu_status")
-        @SerializedName("has_menu_status") val has_menu_status: Has_menu_status = Has_menu_status()
+        @SerializedName("has_menu_status")
+        @Embedded val has_menu_status: Has_menu_status = Has_menu_status()
     )
 
      data class Location(

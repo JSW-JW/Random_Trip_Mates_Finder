@@ -9,11 +9,11 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "restaurant")
 data class RestaurantDetail(
-    @PrimaryKey
-    @NonNull
-    val primaryKey: String? = "",
 
-    @ColumnInfo(name = "R")
+    @NonNull
+    @PrimaryKey
+    val primaryKey: String = "",
+
     @SerializedName("R")
     @Embedded val r: R = R(),
 
@@ -26,7 +26,6 @@ data class RestaurantDetail(
     @ColumnInfo(name = "name")
     @SerializedName("name") val name: String = "",
 
-    @ColumnInfo(name = "location")
     @SerializedName("location")
     @Embedded val location: Location = Location(),
 
@@ -46,18 +45,16 @@ data class RestaurantDetail(
     @SerializedName("currency") val currency: String= "",
 
     @ColumnInfo(name = "highlights")
-    @SerializedName("highlights") val highlights: List<String> = ArrayList(),
+    @SerializedName("highlights") val highlights: Array<String> = emptyArray(),
 
     @ColumnInfo(name = "offers")
-    @SerializedName("offers") val offers: List<String> = ArrayList(),
+    @SerializedName("offers") val offers: Array<String> = emptyArray(),
 
-    @ColumnInfo(name = "user_rating")
     @SerializedName("user_rating")
-    @Embedded val user_rating: User_rating = User_rating(),
+    @Embedded val user_rating: RestaurantSummary.User_rating = RestaurantSummary.User_rating(),
 
     @ColumnInfo(name = "thumb")
-    @SerializedName("thumb")
-    @Embedded val thumb: String? = "",
+    @SerializedName("thumb") val thumb: String? = "",
 
     @ColumnInfo(name = "all_reviews_count")
     @SerializedName("all_reviews_count") val all_reviews_count: String = "",
@@ -69,14 +66,14 @@ data class RestaurantDetail(
     @SerializedName("is_table_reservation_supported") val is_table_reservation_supported: String = "",
 
     @ColumnInfo(name = "phone_numbers")
-    @SerializedName("phone_numbers") val phone_numbers: String = "" // TODO: Remove Field
+    @SerializedName("phone_numbers") val phone_numbers: String = ""
 ) {
     data class R(
         @ColumnInfo(name = "res_id")
         @SerializedName("res_id") val res_id: Int = 0,
         @ColumnInfo(name = "is_grocery_store")
         @SerializedName("is_grocery_store") val is_grocery_store: Boolean = false,
-        @ColumnInfo(name = "has_menu_status")
+
         @SerializedName("has_menu_status")
         @Embedded val has_menu_status: Has_menu_status = Has_menu_status()
     )
@@ -107,20 +104,18 @@ data class RestaurantDetail(
         @SerializedName("rating_text") val rating_text: String = "",
         @ColumnInfo(name = "rating_color")
         @SerializedName("rating_color") val rating_color: String = "",
-        @ColumnInfo(name = "rating_obj")
+
         @SerializedName("rating_obj")
         @Embedded val rating_obj: Rating_obj = Rating_obj(),
+
         @ColumnInfo(name = "votes")
         @SerializedName("votes") val votes: String = ""
     )
 
-    data class Has_menu_status(
-        @ColumnInfo(name = "delivery")
-        @SerializedName("delivery") val delivery: Int = 0,
-        @ColumnInfo(name = "takeaway")
-        @SerializedName("takeaway") val takeaway: Int = 0
+    data class Rating_obj(
+        @SerializedName("bg_color")
+        @Embedded val bg_color: Bg_color = Bg_color()
     )
-
 
     data class Bg_color(
         @ColumnInfo(name = "type")
@@ -129,10 +124,11 @@ data class RestaurantDetail(
         @SerializedName("tint") val tint: String = ""
     )
 
-    data class Rating_obj(
-        @ColumnInfo(name = "bg_color")
-        @SerializedName("bg_color")
-        @Embedded val bg_color: Bg_color = Bg_color()
+    data class Has_menu_status(
+        @ColumnInfo(name = "delivery")
+        @SerializedName("delivery") val delivery: Int = 0,
+        @ColumnInfo(name = "takeaway")
+        @SerializedName("takeaway") val takeaway: Int = 0
     )
 
 }

@@ -34,17 +34,26 @@ class RestaurantRepository(val context: Context) {
 
 
     fun searchByCategoryId(category_id: Int): LiveData<Resource<List<RestaurantSummary>?>?> {
-        Log.d(TAG, "searchByCity: Called")
         return object : NetworkBoundResource<List<RestaurantSummary>, RestaurantListResponse>() {
             override fun saveCallResult(item: RestaurantListResponse) {
+                Log.d(TAG, "saveCallResult: Called")
                 if (item.getRestaurants != null) {
-                    val recipes: Array<RestaurantSummary> = emptyArray()
+                    val recipes: Array<RestaurantSummary> = arrayOf()
                     for ((i, restaurantWrapper) in item.getRestaurants!!.withIndex()) {
                         restaurantWrapper.restaurant.category_id = category_id
                         recipes[i] = restaurantWrapper.restaurant
                     }
                     restaurantDao!!.insertRestaurants(recipes)
                 }
+                /*if (item.getRestaurants != null) {
+                    val recipes: MutableList<RestaurantSummary> = ArrayList()
+                    for ((i, restaurantWrapper) in item.getRestaurants!!.withIndex()) {
+                        restaurantWrapper.restaurant.category_id = category_id
+                        recipes[i] = restaurantWrapper.restaurant
+
+                    }
+                    restaurantDao!!.insertRestaurants(recipes)
+                }*/
             }
 
             override fun shouldFetch(data: List<RestaurantSummary>?): Boolean {
@@ -52,6 +61,7 @@ class RestaurantRepository(val context: Context) {
             }
 
             override fun loadFromDb(): LiveData<List<RestaurantSummary>?> {
+                Log.d(TAG, "loadFromDb: Called")
                 return restaurantDao!!.searchByCategoryId(category_id)
             }
 
