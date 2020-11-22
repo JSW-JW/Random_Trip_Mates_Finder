@@ -92,7 +92,7 @@ abstract class NetworkBoundResource<CacheObject, RequestObject> {
                         saveCallResult(processResponse(requestObjectApiResponse as ApiResponse<CacheObject>.ApiSuccessResponse<CacheObject>) as RequestObject)
                         withContext(Main) {
                             results.addSource(
-                                loadFromDb()
+                                dbSource
                             ) { cacheObject -> setValue(Resource.success(cacheObject)) }
                         }
                     }
@@ -104,7 +104,7 @@ abstract class NetworkBoundResource<CacheObject, RequestObject> {
                     )
                     CoroutineScope(Main).launch {
                         results.addSource(
-                            loadFromDb()
+                            dbSource
                         ) { cacheObject -> setValue(Resource.success(cacheObject)) }
                     }
                 }

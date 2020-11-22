@@ -9,7 +9,7 @@ import com.example.kotlinmessenger.models.RestaurantSummary
 interface RestaurantDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE) // replace the object with new one.
-    fun insertRestaurants(restaurants: Array<RestaurantSummary>)
+    fun insertRestaurants(restaurants: Array<RestaurantSummary?>)
 
     /*@Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertRestaurant(restaurant: RestaurantDetail)*/

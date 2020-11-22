@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.kotlinmessenger.models.RestaurantSummary
+import com.example.kotlinmessenger.models.RestaurantWrapper
 import com.example.kotlinmessenger.persistence.RestaurantDao
 import com.example.kotlinmessenger.persistence.RestaurantDatabase
 import com.example.kotlinmessenger.request.ServiceGenerator
@@ -38,9 +39,10 @@ class RestaurantRepository(val context: Context) {
             override fun saveCallResult(item: RestaurantListResponse) {
                 Log.d(TAG, "saveCallResult: Called")
                 if (item.getRestaurants != null) {
-                    val recipes: Array<RestaurantSummary> = arrayOf()
+                    val recipes: Array<RestaurantSummary?> = arrayOfNulls((item.getRestaurants as List<RestaurantWrapper>).size)
                     for ((i, restaurantWrapper) in item.getRestaurants!!.withIndex()) {
                         restaurantWrapper.restaurant.category_id = category_id
+                        Log.d(TAG, "saveCallResult: $restaurantWrapper")
                         recipes[i] = restaurantWrapper.restaurant
                     }
                     restaurantDao!!.insertRestaurants(recipes)
@@ -62,7 +64,9 @@ class RestaurantRepository(val context: Context) {
 
             override fun loadFromDb(): LiveData<List<RestaurantSummary>?> {
                 Log.d(TAG, "loadFromDb: Called")
-                return restaurantDao!!.searchByCategoryId(category_id)
+                val results = restaurantDao!!.searchByCategoryId(category_id)
+                Log.d(TAG, "loadFromDb: ${results.value}")
+                return results
             }
 
             override fun createCall(): LiveData<ApiResponse<RestaurantListResponse?>?> {
