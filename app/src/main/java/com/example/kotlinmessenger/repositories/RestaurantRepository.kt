@@ -37,25 +37,18 @@ class RestaurantRepository(val context: Context) {
     fun searchByCategoryId(category_id: Int): LiveData<Resource<List<RestaurantSummary>?>?> {
         return object : NetworkBoundResource<List<RestaurantSummary>, RestaurantListResponse>() {
             override fun saveCallResult(item: RestaurantListResponse) {
-                Log.d(TAG, "saveCallResult: Called")
                 if (item.getRestaurants != null) {
-                    val recipes: Array<RestaurantSummary?> = arrayOfNulls((item.getRestaurants as List<RestaurantWrapper>).size)
+                    val restaurantArray: Array<RestaurantSummary?> = arrayOfNulls(item.getRestaurants!!.size)
                     for ((i, restaurantWrapper) in item.getRestaurants!!.withIndex()) {
                         restaurantWrapper.restaurant.category_id = category_id
-                        Log.d(TAG, "saveCallResult: $restaurantWrapper")
-                        recipes[i] = restaurantWrapper.restaurant
+                        Log.d(TAG, "saveCallResult: called: $restaurantWrapper")
+                        restaurantArray[i] = restaurantWrapper.restaurant
                     }
-                    restaurantDao!!.insertRestaurants(recipes)
+                    Log.d(TAG, "saveCallResult: called")
+                    val restaurants: Array<out RestaurantSummary?> = restaurantArray
+                    restaurantDao!!.insertRestaurants(*restaurants)  // using spread operator
                 }
-                /*if (item.getRestaurants != null) {
-                    val recipes: MutableList<RestaurantSummary> = ArrayList()
-                    for ((i, restaurantWrapper) in item.getRestaurants!!.withIndex()) {
-                        restaurantWrapper.restaurant.category_id = category_id
-                        recipes[i] = restaurantWrapper.restaurant
 
-                    }
-                    restaurantDao!!.insertRestaurants(recipes)
-                }*/
             }
 
             override fun shouldFetch(data: List<RestaurantSummary>?): Boolean {
@@ -63,13 +56,14 @@ class RestaurantRepository(val context: Context) {
             }
 
             override fun loadFromDb(): LiveData<List<RestaurantSummary>?> {
-                Log.d(TAG, "loadFromDb: Called")
+                Log.d(TAG, "loadFromDb: called")
                 val results = restaurantDao!!.searchByCategoryId(category_id)
                 Log.d(TAG, "loadFromDb: ${results.value}")
                 return results
             }
 
             override fun createCall(): LiveData<ApiResponse<RestaurantListResponse?>?> {
+                Log.d(TAG, "createCall: called")
                 return ServiceGenerator.retrofitService.searchByCategoryId(category_id)
             }
 

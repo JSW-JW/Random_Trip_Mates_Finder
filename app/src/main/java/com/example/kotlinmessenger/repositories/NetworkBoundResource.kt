@@ -12,6 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
 // CacheObject: Type for the Resource data. (database cache)
@@ -21,6 +22,7 @@ abstract class NetworkBoundResource<CacheObject, RequestObject> {
     companion object {
         private val TAG: String? = "NetworkBoundResource"
     }
+
     var results: MediatorLiveData<Resource<CacheObject?>?> = MediatorLiveData()
 
     init {
@@ -90,9 +92,10 @@ abstract class NetworkBoundResource<CacheObject, RequestObject> {
                     // save the response to the local db
                     CoroutineScope(IO).launch {
                         saveCallResult(processResponse(requestObjectApiResponse as ApiResponse<CacheObject>.ApiSuccessResponse<CacheObject>) as RequestObject)
+
                         withContext(Main) {
                             results.addSource(
-                                dbSource
+                                loadFromDb()
                             ) { cacheObject -> setValue(Resource.success(cacheObject)) }
                         }
                     }
@@ -104,7 +107,7 @@ abstract class NetworkBoundResource<CacheObject, RequestObject> {
                     )
                     CoroutineScope(Main).launch {
                         results.addSource(
-                            dbSource
+                            loadFromDb()
                         ) { cacheObject -> setValue(Resource.success(cacheObject)) }
                     }
                 }
@@ -114,7 +117,7 @@ abstract class NetworkBoundResource<CacheObject, RequestObject> {
                         "onChanged: ApiErrorResponse."
                     )
                     results.addSource(
-                        dbSource
+                        loadFromDb()
                     ) { cacheObject ->
                         setValue(
                             Resource.error(

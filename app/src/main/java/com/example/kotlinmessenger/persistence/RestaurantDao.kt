@@ -2,14 +2,13 @@ package com.example.kotlinmessenger.persistence
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.kotlinmessenger.models.RestaurantDetail
 import com.example.kotlinmessenger.models.RestaurantSummary
 
 @Dao
 interface RestaurantDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE) // replace the object with new one.
-    fun insertRestaurants(restaurants: Array<RestaurantSummary?>)
+    fun insertRestaurants(vararg restaurants: RestaurantSummary?)
 
     /*@Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertRestaurant(restaurant: RestaurantDetail)*/
