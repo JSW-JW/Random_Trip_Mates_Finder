@@ -1,7 +1,9 @@
 package com.example.kotlinmessenger.groupie.trip
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.example.kotlinmessenger.R
 import com.example.kotlinmessenger.models.RestaurantSummary
@@ -25,8 +27,8 @@ class RestaurantListItem(private val restaurant: RestaurantSummary, val context:
 
         val options: RequestOptions = RequestOptions()
             .placeholder(R.drawable.white_background)
-            .error(R.drawable.white_background)
-
+            .error(R.drawable.no_photo)
+        
         Glide.with(context)
             .setDefaultRequestOptions(options)
             .load(image).into(targetImageView)

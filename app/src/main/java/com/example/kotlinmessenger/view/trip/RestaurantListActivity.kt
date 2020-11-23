@@ -50,7 +50,7 @@ class RestaurantListActivity : BaseActivity(), CategoryListener {
                 CategoryListItem(
                     Constants.DEFAULT_SEARCH_CATEGORIES[i],
                     Constants.DEFAULT_SEARCH_CATEGORIES_ID[i],
-                    RestaurantSummary(name = Constants.DEFAULT_SEARCH_CATEGORY_IMAGES[i]),
+                    RestaurantSummary(name = Constants.DEFAULT_SEARCH_CATEGORY_IMAGES[i], primaryKey = 0),
                     this,
                     this@RestaurantListActivity
                 )

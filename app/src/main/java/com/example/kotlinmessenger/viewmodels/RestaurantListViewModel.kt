@@ -43,11 +43,10 @@ class RestaurantListViewModel(application: Application) : AndroidViewModel(appli
         val repositorySource: LiveData<Resource<List<RestaurantSummary>?>?> =
             mRestaurantRepository.searchByCategoryId(category_id)
 
-
         results.addSource(repositorySource) { listResource ->
-
             if (listResource != null) {
                 results.value = listResource
+                Log.d(TAG, "executeSearch: $listResource")
                 if (listResource.status == Resource.Status.SUCCESS) {
                     // TODO: handle query exhausted
                     results.removeSource(repositorySource)

@@ -10,8 +10,8 @@ import com.google.gson.annotations.SerializedName
 data class RestaurantSummary(
 
     @NonNull
-    @PrimaryKey
-    val primaryKey: String = "",
+    @PrimaryKey(autoGenerate = true)
+    val primaryKey: Int,
 
     @ColumnInfo(name = "name")
     @SerializedName("name") val name: String = "",

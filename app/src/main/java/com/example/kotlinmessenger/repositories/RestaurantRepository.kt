@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.kotlinmessenger.models.RestaurantSummary
-import com.example.kotlinmessenger.models.RestaurantWrapper
 import com.example.kotlinmessenger.persistence.RestaurantDao
 import com.example.kotlinmessenger.persistence.RestaurantDatabase
 import com.example.kotlinmessenger.request.ServiceGenerator
@@ -39,10 +38,17 @@ class RestaurantRepository(val context: Context) {
             override fun saveCallResult(item: RestaurantListResponse) {
                 if (item.getRestaurants != null) {
                     val restaurantArray: Array<RestaurantSummary?> = arrayOfNulls(item.getRestaurants!!.size)
-                    for ((i, restaurantWrapper) in item.getRestaurants!!.withIndex()) {
+                    /*for ((i, restaurantWrapper) in item.getRestaurants!!.withIndex()) {
                         restaurantWrapper.restaurant.category_id = category_id
-                        Log.d(TAG, "saveCallResult: called: $restaurantWrapper")
                         restaurantArray[i] = restaurantWrapper.restaurant
+                        Log.d(TAG, "saveCallResult: $restaurantArray")
+                    }*/
+                    item.getRestaurants!!.forEachIndexed { index, restaurantWrapper ->
+                        restaurantWrapper.restaurant.category_id = category_id
+                        restaurantArray[index] = restaurantWrapper.restaurant
+                    }
+                    for(restaurant in restaurantArray) {
+                        Log.d(TAG, "saveCallResult: $restaurant")
                     }
                     Log.d(TAG, "saveCallResult: called")
                     val restaurants: Array<out RestaurantSummary?> = restaurantArray
@@ -57,9 +63,7 @@ class RestaurantRepository(val context: Context) {
 
             override fun loadFromDb(): LiveData<List<RestaurantSummary>?> {
                 Log.d(TAG, "loadFromDb: called")
-                val results = restaurantDao!!.searchByCategoryId(category_id)
-                Log.d(TAG, "loadFromDb: ${results.value}")
-                return results
+                return restaurantDao!!.searchByCategoryId(category_id)
             }
 
             override fun createCall(): LiveData<ApiResponse<RestaurantListResponse?>?> {

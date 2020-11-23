@@ -12,7 +12,7 @@ data class RestaurantDetail(
 
     @NonNull
     @PrimaryKey
-    val primaryKey: String = "",
+    val primaryKey: String,
 
     @SerializedName("R")
     @Embedded val r: R = R(),

@@ -91,7 +91,7 @@ abstract class NetworkBoundResource<CacheObject, RequestObject> {
                     )
                     // save the response to the local db
                     CoroutineScope(IO).launch {
-                        saveCallResult(processResponse(requestObjectApiResponse as ApiResponse<CacheObject>.ApiSuccessResponse<CacheObject>) as RequestObject)
+                        saveCallResult(requestObjectApiResponse.body as RequestObject)
 
                         withContext(Main) {
                             results.addSource(

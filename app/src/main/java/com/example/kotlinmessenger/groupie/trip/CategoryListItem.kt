@@ -3,6 +3,7 @@ package com.example.kotlinmessenger.groupie.trip
 import android.content.Context
 import android.net.Uri
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.kotlinmessenger.R
 import com.example.kotlinmessenger.models.RestaurantSummary
 import com.xwray.groupie.GroupieViewHolder
@@ -15,7 +16,14 @@ class CategoryListItem(private val text: String, private val category_id: Int, p
         viewHolder.itemView.category_title.text = text
         val targetImageView = viewHolder.itemView.category_image
         val path = Uri.parse("android.resource://com.example.kotlinmessenger/drawable/" + restaurant.name)
-        Glide.with(context).load(path).into(targetImageView)
+
+        val options: RequestOptions = RequestOptions()
+            .placeholder(R.drawable.white_background)
+            .error(R.drawable.white_background)
+
+        Glide.with(context)
+            .setDefaultRequestOptions(options)
+            .load(path).into(targetImageView)
 
         viewHolder.itemView.setOnClickListener {
             categoryListener.onCategoryClick(category_id)
