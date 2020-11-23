@@ -2,15 +2,23 @@ package com.example.kotlinmessenger.groupie.trip
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.text.TextUtils
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.Request
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.example.kotlinmessenger.R
 import com.example.kotlinmessenger.models.RestaurantSummary
 import com.example.kotlinmessenger.models.RestaurantWrapper
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.restaurant_list_item_layout.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
 
 class RestaurantListItem(private val restaurant: RestaurantSummary, val context: Context) : Item<GroupieViewHolder>() {
 
@@ -28,10 +36,22 @@ class RestaurantListItem(private val restaurant: RestaurantSummary, val context:
         val options: RequestOptions = RequestOptions()
             .placeholder(R.drawable.white_background)
             .error(R.drawable.no_photo)
-        
-        Glide.with(context)
-            .setDefaultRequestOptions(options)
-            .load(image).into(targetImageView)
+            .centerCrop()
+
+        val emptyCaseOptions: RequestOptions = RequestOptions()
+            .placeholder(R.drawable.white_background)
+            .error(R.drawable.no_photo)
+
+        if(TextUtils.isEmpty(image)) {
+            Glide.with(context)
+                .setDefaultRequestOptions(emptyCaseOptions)
+                .load(image).into(targetImageView)
+        }
+        else {
+            Glide.with(context)
+                .setDefaultRequestOptions(options)
+                .load(image).into(targetImageView)
+        }
 
     }
 
