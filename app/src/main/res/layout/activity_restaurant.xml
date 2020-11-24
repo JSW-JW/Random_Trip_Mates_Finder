@@ -1,9 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.trip.RestaurantActivity">
+    android:visibility="gone">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/restaurant_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/restaurant_image_height"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/restaurant_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="7dp"
+            android:textColor="#000"
+            android:textSize="@dimen/restaurant_name_textSize" />
+
+        <LinearLayout
+            android:id="@+id/restaurant_r_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/restaurant_r_isGroceryStore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/restaurant_r_textSize"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/restaurant_r_delivery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/restaurant_r_textSize"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/restaurant_r_takeaway"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/restaurant_r_textSize"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/restaurant_userRating_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/restaurant_userRating_aggregate_rating"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="10"
+                android:gravity="center"
+                android:textSize="@dimen/restaurant_userRating_textSize" />
+
+            <TextView
+                android:id="@+id/restaurant_userRating_rating_text"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="10"
+                android:gravity="center"
+                android:textSize="@dimen/restaurant_userRating_textSize" />
+
+            <TextView
+                android:id="@+id/restaurant_userRating_votes"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="10"
+                android:gravity="center"
+                android:textSize="@dimen/restaurant_userRating_textSize" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/restaurant_highlights"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:gravity="center"
+            android:textSize="@dimen/restaurant_normal_text" />
+
+        <TextView
+            android:id="@+id/restaurant_timing"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:gravity="center"
+            android:textSize="@dimen/restaurant_normal_text" />
+
+        <TextView
+            android:id="@+id/restaurant_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:gravity="center"
+            android:textSize="@dimen/restaurant_normal_text" />
+
+
+    </LinearLayout>
+
+</ScrollView>

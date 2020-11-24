@@ -8,5 +8,8 @@
     <dimen name="restaurant_address_textSize">16sp</dimen>
     <dimen name="restaurant_timing_textSize">16sp</dimen>
     <dimen name="restaurant_currency_textSize">18sp</dimen>
+    <dimen name="restaurant_r_textSize">16sp</dimen>
+    <dimen name="restaurant_userRating_textSize">16sp</dimen>
+    <dimen name="restaurant_normal_text">16sp</dimen>
 
 </resources>

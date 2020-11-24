@@ -3,12 +3,14 @@ package com.example.kotlinmessenger.repositories
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
+import com.example.kotlinmessenger.models.RestaurantDetail
 import com.example.kotlinmessenger.models.RestaurantSummary
 import com.example.kotlinmessenger.persistence.RestaurantDao
 import com.example.kotlinmessenger.persistence.RestaurantDatabase
 import com.example.kotlinmessenger.request.ServiceGenerator
 import com.example.kotlinmessenger.request.response.ApiResponse
 import com.example.kotlinmessenger.request.response.RestaurantListResponse
+import com.example.kotlinmessenger.request.response.RestaurantResponse
 import com.example.kotlinmessenger.util.Resource
 
 class RestaurantRepository(val context: Context) {
@@ -95,8 +97,27 @@ class RestaurantRepository(val context: Context) {
         }.asLiveData
     }
 
-    fun searchRestaurantById() {
+    fun searchByRestaurantId(resId: Int): LiveData<Resource<RestaurantDetail?>?> {
+        return object: NetworkBoundResource<RestaurantDetail, RestaurantResponse>() {
+            override fun saveCallResult(item: RestaurantResponse) {
+                item.getRestaurant?.let { restaurantDetail ->
+                    restaurantDao!!.insertRestaurant(restaurantDetail)
+                }
+            }
 
+            override fun shouldFetch(data: RestaurantDetail?): Boolean {
+                return true
+            }
+
+            override fun loadFromDb(): LiveData<RestaurantDetail?> {
+                return restaurantDao!!.searchByRestaurantId(resId)
+            }
+
+            override fun createCall(): LiveData<ApiResponse<RestaurantResponse?>?> {
+                return ServiceGenerator.retrofitService.searchRestaurantById(resId)
+            }
+
+        }.asLiveData
     }
 
 }

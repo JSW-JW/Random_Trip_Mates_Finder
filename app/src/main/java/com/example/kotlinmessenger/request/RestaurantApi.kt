@@ -20,6 +20,12 @@ interface RestaurantApi {
 
     @Headers("${Constants.HEADER_KEY}: ${Constants.API_KEY}")
     @GET("search")
+    fun searchRestaurantById(
+        @Query("res_id") resId: Int
+    ): LiveData<ApiResponse<RestaurantResponse?>?>
+
+    @Headers("${Constants.HEADER_KEY}: ${Constants.API_KEY}")
+    @GET("search")
     fun searchByCity(
         @Query("entity_id") cityName: String,
         @Query("entity_type") entityType: String

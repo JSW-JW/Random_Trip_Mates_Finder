@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken
 
 object Converters2 {
     @TypeConverter
+    @JvmStatic
     fun fromString(value: String?): Array<String> {
         val listType =
             object : TypeToken<Array<String?>?>() {}.type
@@ -13,6 +14,7 @@ object Converters2 {
     }
 
     @TypeConverter
+    @JvmStatic
     fun fromArrayList(list: Array<String?>?): String {
         val gson = Gson()
         return gson.toJson(list)

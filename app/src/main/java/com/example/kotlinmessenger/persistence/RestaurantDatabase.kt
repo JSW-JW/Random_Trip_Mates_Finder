@@ -8,8 +8,8 @@ import androidx.room.TypeConverters
 import com.example.kotlinmessenger.models.RestaurantDetail
 import com.example.kotlinmessenger.models.RestaurantSummary
 
-@Database(entities = [RestaurantSummary::class], version = 1)
-@TypeConverters(Converters::class)
+@Database(entities = [RestaurantSummary::class, RestaurantDetail::class], version = 1)
+@TypeConverters(Converters::class, Converters2::class)
 abstract class RestaurantDatabase : RoomDatabase() {
 
     private val mRestaurantDao: RestaurantDao? = null

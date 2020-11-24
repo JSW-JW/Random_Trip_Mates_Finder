@@ -20,9 +20,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 
-class RestaurantListItem(private val restaurant: RestaurantSummary, val context: Context) : Item<GroupieViewHolder>() {
+class RestaurantListItem(private val restaurant: RestaurantSummary, val context: Context, val restaurantListener: RestaurantListener) : Item<GroupieViewHolder>() {
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+
+        viewHolder.itemView.setOnClickListener {
+            restaurantListener.onItemClick(restaurant.r.res_id)
+        }
+
         viewHolder.itemView.restaurant_name.text = restaurant.name
         val locality = restaurant.location.city + restaurant.location.locality
         viewHolder.itemView.restaurant_locality.text = locality

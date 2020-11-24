@@ -7,7 +7,7 @@ class RestaurantResponse {
 
     private val restaurant: RestaurantDetail? = null
 
-    val getRestaurants: RestaurantDetail?
+    val getRestaurant: RestaurantDetail?
         get() = restaurant
 
 }

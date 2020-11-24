@@ -1,5 +1,6 @@
 package com.example.kotlinmessenger.view.trip
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -8,10 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinmessenger.R
-import com.example.kotlinmessenger.groupie.trip.CategoryListItem
-import com.example.kotlinmessenger.groupie.trip.CategoryListener
-import com.example.kotlinmessenger.groupie.trip.RestaurantItemDecoration
-import com.example.kotlinmessenger.groupie.trip.RestaurantListItem
+import com.example.kotlinmessenger.groupie.trip.*
 import com.example.kotlinmessenger.models.RestaurantSummary
 import com.example.kotlinmessenger.util.Constants
 import com.example.kotlinmessenger.util.Resource
@@ -21,7 +19,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.activity_category.*
 
-class RestaurantListActivity : BaseActivity(), CategoryListener {
+class RestaurantListActivity : BaseActivity(), CategoryListener, RestaurantListener {
 
     private val TAG = "CategoryActivity"
     private lateinit var mAdapter: GroupAdapter<GroupieViewHolder>
@@ -72,7 +70,8 @@ class RestaurantListActivity : BaseActivity(), CategoryListener {
                                 mAdapter.add(
                                     RestaurantListItem(
                                         restaurant,
-                                        this@RestaurantListActivity
+                                        this@RestaurantListActivity,
+                                        this
                                     )
                                 )
                                 mAdapter.notifyDataSetChanged()
@@ -96,5 +95,11 @@ class RestaurantListActivity : BaseActivity(), CategoryListener {
 
     override fun onCategoryClick(categoryId: Int) {
         mRestaurantListViewModel?.searchByCategoryId(categoryId)
+    }
+
+    override fun onItemClick(resId: Int) {
+        val intent = Intent(this, RestaurantActivity::class.java)
+        intent.putExtra("resId", resId)
+        startActivity(intent)
     }
 }

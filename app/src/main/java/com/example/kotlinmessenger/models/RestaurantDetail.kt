@@ -11,8 +11,8 @@ import com.google.gson.annotations.SerializedName
 data class RestaurantDetail(
 
     @NonNull
-    @PrimaryKey
-    val primaryKey: String,
+    @PrimaryKey(autoGenerate = true)
+    val primaryKey: Int,
 
     @SerializedName("R")
     @Embedded val r: R = R(),
@@ -51,7 +51,7 @@ data class RestaurantDetail(
     @SerializedName("offers") val offers: Array<String> = emptyArray(),
 
     @SerializedName("user_rating")
-    @Embedded val user_rating: RestaurantSummary.User_rating = RestaurantSummary.User_rating(),
+    @Embedded val user_rating: User_rating = User_rating(),
 
     @ColumnInfo(name = "thumb")
     @SerializedName("thumb") val thumb: String? = "",
