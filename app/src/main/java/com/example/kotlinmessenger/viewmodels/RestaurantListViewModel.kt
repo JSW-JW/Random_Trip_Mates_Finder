@@ -46,12 +46,10 @@ class RestaurantListViewModel(application: Application) : AndroidViewModel(appli
         results.addSource(repositorySource) { listResource ->
             if (listResource != null) {
                 results.value = listResource
-                Log.d(TAG, "executeSearch: $listResource")
                 if (listResource.status == Resource.Status.SUCCESS) {
                     // TODO: handle query exhausted
                     results.removeSource(repositorySource)
                 } else if (listResource.status == Resource.Status.ERROR) {
-                    Log.d(TAG, "executeSearch: ERROR")
                     results.removeSource(repositorySource)
                 }
             } else {

@@ -65,7 +65,6 @@ class RestaurantListActivity : BaseActivity(), CategoryListener, RestaurantListe
                         if (listResource.data != null) {
                             mAdapter.clear()
                             for (restaurant in listResource.data) {
-                                Log.d(TAG, "onResponse: $restaurant")
                                 recycler_view.addItemDecoration(RestaurantItemDecoration(2))
                                 mAdapter.add(
                                     RestaurantListItem(

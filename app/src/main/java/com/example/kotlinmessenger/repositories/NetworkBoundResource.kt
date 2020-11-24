@@ -64,13 +64,13 @@ abstract class NetworkBoundResource<CacheObject, RequestObject> {
      * @param dbSource
      */
     private fun fetchFromNetwork(dbSource: LiveData<CacheObject?>) {
-        Log.d(TAG, "fetchFromNetwork: called.")
 
         // update LiveData for loading status
         results.addSource(
             dbSource
         ) { cacheObject -> setValue(loading(cacheObject)) }
         val apiResponse: LiveData<ApiResponse<RequestObject?>?> = createCall()
+        Log.d(TAG, "fetchFromNetwork: $apiResponse")
         results.addSource(
             apiResponse
         ) { requestObjectApiResponse ->

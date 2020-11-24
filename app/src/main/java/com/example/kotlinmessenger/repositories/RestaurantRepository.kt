@@ -49,10 +49,6 @@ class RestaurantRepository(val context: Context) {
                         restaurantWrapper.restaurant.category_id = category_id
                         restaurantArray[index] = restaurantWrapper.restaurant
                     }
-                    for(restaurant in restaurantArray) {
-                        Log.d(TAG, "saveCallResult: $restaurant")
-                    }
-                    Log.d(TAG, "saveCallResult: called")
                     val restaurants: Array<out RestaurantSummary?> = restaurantArray
                     restaurantDao!!.insertRestaurants(*restaurants)  // using spread operator
                 }
@@ -64,12 +60,10 @@ class RestaurantRepository(val context: Context) {
             }
 
             override fun loadFromDb(): LiveData<List<RestaurantSummary>?> {
-                Log.d(TAG, "loadFromDb: called")
                 return restaurantDao!!.searchByCategoryId(category_id)
             }
 
             override fun createCall(): LiveData<ApiResponse<RestaurantListResponse?>?> {
-                Log.d(TAG, "createCall: called")
                 return ServiceGenerator.retrofitService.searchByCategoryId(category_id)
             }
 
@@ -100,7 +94,9 @@ class RestaurantRepository(val context: Context) {
     fun searchByRestaurantId(resId: Int): LiveData<Resource<RestaurantDetail?>?> {
         return object: NetworkBoundResource<RestaurantDetail, RestaurantResponse>() {
             override fun saveCallResult(item: RestaurantResponse) {
+                Log.d(TAG, "saveCallResult: called")
                 item.getRestaurant?.let { restaurantDetail ->
+                    Log.d(TAG, "saveCallResult: $restaurantDetail")
                     restaurantDao!!.insertRestaurant(restaurantDetail)
                 }
             }
@@ -114,7 +110,10 @@ class RestaurantRepository(val context: Context) {
             }
 
             override fun createCall(): LiveData<ApiResponse<RestaurantResponse?>?> {
-                return ServiceGenerator.retrofitService.searchRestaurantById(resId)
+                Log.d(TAG, "createCall: called")
+                val apiResponse = ServiceGenerator.retrofitService.searchByRestaurantId(resId)
+                Log.d(TAG, "createCall: $apiResponse")
+                return apiResponse
             }
 
         }.asLiveData

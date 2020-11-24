@@ -1,5 +1,6 @@
 package com.example.kotlinmessenger.view.trip
 
+import android.app.Service
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -9,10 +10,14 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.kotlinmessenger.R
 import com.example.kotlinmessenger.models.RestaurantDetail
+import com.example.kotlinmessenger.request.ServiceGenerator
 import com.example.kotlinmessenger.util.Resource
 import com.example.kotlinmessenger.view.BaseActivity
 import com.example.kotlinmessenger.viewmodels.RestaurantViewModel
 import kotlinx.android.synthetic.main.activity_restaurant.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RestaurantActivity : BaseActivity() {
 
@@ -31,10 +36,12 @@ class RestaurantActivity : BaseActivity() {
         checkIntentExtra()
     }
 
+
     private fun checkIntentExtra() {
         if (intent.hasExtra("resId")) {
             val resId = intent.getIntExtra("resId", 0)
             searchRestaurantById(resId)
+            Log.d(TAG, "checkIntentExtra: $resId")
         } else {
             Toast.makeText(this, "Cannot check the proper restaurant id.", Toast.LENGTH_LONG).show()
         }

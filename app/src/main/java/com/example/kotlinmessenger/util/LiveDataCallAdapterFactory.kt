@@ -1,5 +1,6 @@
 package com.example.kotlinmessenger.util
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.kotlinmessenger.request.response.ApiResponse
 import retrofit2.CallAdapter
@@ -8,9 +9,14 @@ import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
 class LiveDataCallAdapterFactory : CallAdapter.Factory() {
+
+    companion object {
+        private const val TAG = "LiveDataCallAdapterFact"
+    }
+
     /**
      * This method performs a number of checks and then returns the Response type for the Retrofit requests
-     * (@bodyType is the ResponseType. It can be RecipeResponse or RecipeSearchResponse)
+     * (@bodyType is the ResponseType. It can be RestaurantResponse or RestaurantListResponse)
      *
      * CHECK #1) returnType returns LIVEDATA
      * CHECK #2) Type LiveData<T> is of ApiResponse.class
@@ -27,6 +33,8 @@ class LiveDataCallAdapterFactory : CallAdapter.Factory() {
         annotations: Array<Annotation>,
         retrofit: Retrofit
     ): CallAdapter<*, *>? {
+
+        Log.d(TAG, "get: $returnType, $annotations")
 
         // Check #1
         // Make sure the CallAdapter is returning a type of LiveData
@@ -47,7 +55,7 @@ class LiveDataCallAdapterFactory : CallAdapter.Factory() {
 
         // Check #3
         // Check if ApiResponse is parameterized. AKA: Does ApiResponse<T> exist? (must wrap around T)
-        // FYI: T is either RecipeResponse or RecipeSearchResponse in this app. But T can be anything theoretically.
+        // FYI: T is either RestaurantResponse or RestaurantListResponse in this app. But T can be anything theoretically.
         require(observableType is ParameterizedType) { "resource must be parameterized" }
 
         // get the Response type. (RecipeSearchResponse or RecipeResponse)

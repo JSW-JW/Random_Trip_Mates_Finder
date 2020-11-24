@@ -1,6 +1,7 @@
 package com.example.kotlinmessenger.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.kotlinmessenger.models.RestaurantDetail
 import com.example.kotlinmessenger.models.RestaurantSummary
@@ -8,6 +9,10 @@ import com.example.kotlinmessenger.repositories.RestaurantRepository
 import com.example.kotlinmessenger.util.Resource
 
 class RestaurantViewModel(application: Application): AndroidViewModel(application) {
+    
+    companion object {
+        private const val TAG = "RestaurantViewModel"
+    }
 
     class Factory(val application: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -30,6 +35,7 @@ class RestaurantViewModel(application: Application): AndroidViewModel(applicatio
 
         results.addSource(repositorySource) { detailResource ->
             if(detailResource != null) {
+                Log.d(TAG, "executeSearch: $detailResource")
                 results.value = detailResource
 
                 results.removeSource(repositorySource)

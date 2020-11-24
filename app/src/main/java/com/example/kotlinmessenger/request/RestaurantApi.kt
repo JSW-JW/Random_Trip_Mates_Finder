@@ -1,10 +1,12 @@
 package com.example.kotlinmessenger.request
 
 import androidx.lifecycle.LiveData
+import com.example.kotlinmessenger.models.RestaurantDetail
 import com.example.kotlinmessenger.request.response.ApiResponse
 import com.example.kotlinmessenger.request.response.RestaurantListResponse
 import com.example.kotlinmessenger.request.response.RestaurantResponse
 import com.example.kotlinmessenger.util.Constants
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
@@ -19,15 +21,22 @@ interface RestaurantApi {
     ): LiveData<ApiResponse<RestaurantListResponse?>?>
 
     @Headers("${Constants.HEADER_KEY}: ${Constants.API_KEY}")
-    @GET("search")
-    fun searchRestaurantById(
+    @GET("restaurant")
+    fun searchByRestaurantId(
         @Query("res_id") resId: Int
     ): LiveData<ApiResponse<RestaurantResponse?>?>
+
+    @Headers("${Constants.HEADER_KEY}: ${Constants.API_KEY}")
+    @GET("restaurant")
+    fun testApiCall(
+        @Query("res_id") resId: Int
+    ): Call<RestaurantDetail>
+
 
     @Headers("${Constants.HEADER_KEY}: ${Constants.API_KEY}")
     @GET("search")
     fun searchByCity(
         @Query("entity_id") cityName: String,
         @Query("entity_type") entityType: String
-    ): LiveData<ApiResponse<RestaurantResponse>>
+    ): LiveData<ApiResponse<RestaurantListResponse>>
 }

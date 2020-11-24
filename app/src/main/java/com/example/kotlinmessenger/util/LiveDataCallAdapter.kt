@@ -25,16 +25,16 @@ class LiveDataCallAdapter<R>(private val responseType: Type) :
         return object: LiveData<ApiResponse<R>>() {
             override fun onActive() {
                 super.onActive()
-                val apiResponse: ApiResponse<R> = ApiResponse()
+                Log.d(TAG, "onActive: Called")
                 call.enqueue(object: Callback<R> {
                     override fun onResponse(call: Call<R>, response: Response<R>) {
-                        postValue(apiResponse.create(response))
-                        Log.d(TAG, "onResponse: $response")
+                        Log.d(TAG, "onResponse: ${response.body()}")
+                        postValue(ApiResponse<R>().create(response))
                     }
 
                     override fun onFailure(call: Call<R>, t: Throwable) {
-                        postValue(apiResponse.create(t))
                         Log.d(TAG, "onFailure: $t")
+                        postValue(ApiResponse<R>().create(t))
                     }
                 })
             }
