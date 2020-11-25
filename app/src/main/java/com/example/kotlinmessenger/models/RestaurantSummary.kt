@@ -55,9 +55,9 @@ data class RestaurantSummary(
 ) {
     data class R(
         @ColumnInfo(name = "res_id")
-        @SerializedName("res_id") val res_id: Int = 0,
-        @SerializedName("has_menu_status")
-        @Embedded val has_menu_status: Has_menu_status = Has_menu_status()
+        @SerializedName("res_id") val res_id: Int = 0
+       /* @SerializedName("has_menu_status")
+        @Embedded val has_menu_status: Has_menu_status = Has_menu_status()*/
     )
 
      data class Location(
@@ -78,11 +78,11 @@ data class RestaurantSummary(
         @SerializedName("votes") val votes: String = ""
     )
 
-    data class Has_menu_status(
+    /*data class Has_menu_status(
         @ColumnInfo(name = "delivery")
-        @SerializedName("delivery") val delivery: Int = 0,
+        @SerializedName("delivery") val delivery: Boolean = false,
         @ColumnInfo(name = "takeaway")
         @SerializedName("takeaway") val takeaway: Int = 0
-    )
+    )*/
 
 }

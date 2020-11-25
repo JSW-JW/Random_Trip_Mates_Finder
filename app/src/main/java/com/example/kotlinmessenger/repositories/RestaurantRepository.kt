@@ -1,11 +1,13 @@
 package com.example.kotlinmessenger.repositories
 
+import android.app.Service
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.example.kotlinmessenger.models.RestaurantDetail
 import com.example.kotlinmessenger.models.RestaurantSummary
+import com.example.kotlinmessenger.models.RestaurantWrapper
 import com.example.kotlinmessenger.persistence.RestaurantDao
 import com.example.kotlinmessenger.persistence.RestaurantDatabase
 import com.example.kotlinmessenger.request.ServiceGenerator
@@ -92,6 +94,34 @@ class RestaurantRepository(val context: Context) {
                 return apiResponse
             }
 
+        }.asLiveData
+    }
+
+    fun searchRestaurant(query: String?): LiveData<Resource<List<RestaurantSummary>?>?> {
+        return object: NetworkBoundResource<List<RestaurantSummary>, RestaurantListResponse>() {
+            override fun saveCallResult(item: RestaurantListResponse) {
+                if(item.getRestaurants != null) {
+                    for(restaurantWrapper in item.getRestaurants as List<RestaurantWrapper>) {
+                        restaurantDao?.insertRestaurants(restaurantWrapper.restaurant)
+                    }
+                }
+                Log.d(TAG, "saveCallResult: called")
+            }
+
+            override fun shouldFetch(data: List<RestaurantSummary>?): Boolean {
+                return true
+            }
+
+            override fun loadFromDb(): LiveData<List<RestaurantSummary>?> {
+                Log.d(TAG, "loadFromDb: called")
+                return restaurantDao!!.searchRestaurant(query)
+            }
+
+            override fun createCall(): LiveData<ApiResponse<RestaurantListResponse?>?> {
+                val results = ServiceGenerator.retrofitService.searchRestaurant(query)
+                Log.d(TAG, "createCall: $results")
+                return results
+            }
         }.asLiveData
     }
 

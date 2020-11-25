@@ -8,7 +8,7 @@ import com.example.kotlinmessenger.models.RestaurantSummary
 @Dao
 interface RestaurantDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE) // replace the object with new one.
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertRestaurants(vararg restaurants: RestaurantSummary?)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -17,10 +17,11 @@ interface RestaurantDao {
     @Update
     fun updateRestaurant(restaurant: RestaurantSummary) // TODO: search how to access particular class and field(if embedded annotation, cannot access the class itself.
 
-    @Query("SELECT * FROM restaurants WHERE city LIKE '%' || :query || '%'")
-    fun searchByCityName(
-        query: String
-    ): LiveData<List<RestaurantSummary?>?>?
+    @Query(
+        "SELECT * FROM restaurants WHERE name LIKE '%' || :query || '%' OR address LIKE '%' || :query || '%' OR locality LIKE '%' || :query || '%' OR city LIKE '%' || :query || '%'")
+    fun searchRestaurant(
+        query: String?
+    ): LiveData<List<RestaurantSummary>?>
 
     @Query("SELECT * FROM restaurants WHERE category_id=:category_id")
     fun searchByCategoryId(category_id: Int): LiveData<List<RestaurantSummary>?>
