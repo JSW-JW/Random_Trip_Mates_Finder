@@ -9,18 +9,18 @@ import com.example.kotlinmessenger.repositories.RestaurantRepository
 import com.example.kotlinmessenger.util.Resource
 
 class RestaurantViewModel(application: Application): AndroidViewModel(application) {
-    
+
     companion object {
         private const val TAG = "RestaurantViewModel"
     }
 
-    class Factory(val application: Application) : ViewModelProvider.Factory {
+    class Factory(private val application: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return RestaurantViewModel(application) as T
         }
     }
 
-    private var mRestaurantRepository: RestaurantRepository = RestaurantRepository.instance(application)
+    private val mRestaurantRepository: RestaurantRepository = RestaurantRepository.instance(application)
     private val results: MediatorLiveData<Resource<RestaurantDetail?>?> = MediatorLiveData()
 
     val restaurantDetail: MediatorLiveData<Resource<RestaurantDetail?>?>

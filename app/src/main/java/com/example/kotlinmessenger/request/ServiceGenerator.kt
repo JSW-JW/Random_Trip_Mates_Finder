@@ -23,9 +23,9 @@ object ServiceGenerator {
 
     private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl(Constants.BASE_URL)
-        .client(getHttpClient())
-        .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(LiveDataCallAdapterFactory())
+        .addConverterFactory(GsonConverterFactory.create())
+        .client(getHttpClient())
         .build()
 
 

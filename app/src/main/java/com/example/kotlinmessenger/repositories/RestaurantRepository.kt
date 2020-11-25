@@ -3,6 +3,7 @@ package com.example.kotlinmessenger.repositories
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import com.example.kotlinmessenger.models.RestaurantDetail
 import com.example.kotlinmessenger.models.RestaurantSummary
 import com.example.kotlinmessenger.persistence.RestaurantDao
@@ -40,11 +41,6 @@ class RestaurantRepository(val context: Context) {
             override fun saveCallResult(item: RestaurantListResponse) {
                 if (item.getRestaurants != null) {
                     val restaurantArray: Array<RestaurantSummary?> = arrayOfNulls(item.getRestaurants!!.size)
-                    /*for ((i, restaurantWrapper) in item.getRestaurants!!.withIndex()) {
-                        restaurantWrapper.restaurant.category_id = category_id
-                        restaurantArray[i] = restaurantWrapper.restaurant
-                        Log.d(TAG, "saveCallResult: $restaurantArray")
-                    }*/
                     item.getRestaurants!!.forEachIndexed { index, restaurantWrapper ->
                         restaurantWrapper.restaurant.category_id = category_id
                         restaurantArray[index] = restaurantWrapper.restaurant
@@ -70,27 +66,6 @@ class RestaurantRepository(val context: Context) {
         }.asLiveData
     }
 
-    fun searchByCity(): LiveData<Resource<List<RestaurantSummary>?>?> {
-        return object : NetworkBoundResource<List<RestaurantSummary>, RestaurantListResponse>() {
-            override fun saveCallResult(item: RestaurantListResponse) {
-                TODO("Not yet implemented")
-            }
-
-            override fun shouldFetch(data: List<RestaurantSummary>?): Boolean {
-                TODO("Not yet implemented")
-            }
-
-            override fun loadFromDb(): LiveData<List<RestaurantSummary>?> {
-                TODO("Not yet implemented")
-            }
-
-            override fun createCall(): LiveData<ApiResponse<RestaurantListResponse?>?> {
-                TODO("Not yet implemented")
-            }
-
-        }.asLiveData
-    }
-
     fun searchByRestaurantId(resId: Int): LiveData<Resource<RestaurantDetail?>?> {
         return object: NetworkBoundResource<RestaurantDetail, RestaurantResponse>() {
             override fun saveCallResult(item: RestaurantResponse) {
@@ -106,6 +81,7 @@ class RestaurantRepository(val context: Context) {
             }
 
             override fun loadFromDb(): LiveData<RestaurantDetail?> {
+                Log.d(TAG, "loadFromDb: called")
                 return restaurantDao!!.searchByRestaurantId(resId)
             }
 

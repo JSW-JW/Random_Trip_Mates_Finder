@@ -12,13 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".view.BaseActivity"></activity>
-        <activity android:name=".view.trip.RestaurantActivity" />
-        <activity android:name=".view.trip.RestaurantListActivity">
+        <activity android:name=".view.trip.RestaurantActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".view.trip.RestaurantListActivity">
+
         </activity>
         <activity android:name=".view.chat.LatestMessagesActivity" />
         <activity android:name=".view.auth.RegisterActivity" />

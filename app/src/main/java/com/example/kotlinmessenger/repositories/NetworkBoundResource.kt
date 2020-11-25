@@ -23,10 +23,11 @@ abstract class NetworkBoundResource<CacheObject, RequestObject> {
         private val TAG: String? = "NetworkBoundResource"
     }
 
-    var results: MediatorLiveData<Resource<CacheObject?>?> = MediatorLiveData()
+    private var results: MediatorLiveData<Resource<CacheObject?>?> = MediatorLiveData()
 
     init {
         init()
+        Log.d(TAG, "NetworkBoundResource: called")
     }
 
     fun setValue(newValue: Resource<CacheObject?>?) {
@@ -41,8 +42,10 @@ abstract class NetworkBoundResource<CacheObject, RequestObject> {
         results.value = loading(null)
 
         // observe LiveData source from local db
-        val dbSource = loadFromDb()
+        val dbSource: LiveData<CacheObject?> = loadFromDb()
+        Log.d(TAG, "init: called")
         results.addSource(dbSource) { cacheObject ->
+            Log.d(TAG, "init: called2")
             results.removeSource(dbSource)
             if (shouldFetch(cacheObject)) {
                 // get data from the network
@@ -66,6 +69,7 @@ abstract class NetworkBoundResource<CacheObject, RequestObject> {
     private fun fetchFromNetwork(dbSource: LiveData<CacheObject?>) {
 
         // update LiveData for loading status
+        Log.d(TAG, "fetchFromNetwork: called")
         results.addSource(
             dbSource
         ) { cacheObject -> setValue(loading(cacheObject)) }

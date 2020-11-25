@@ -33,21 +33,23 @@ class RestaurantActivity : BaseActivity() {
 
         provideViewModel()
         subscribeObservers()
-        checkIntentExtra()
+       /* checkIntentExtra()*/
+        searchByRestaurantId(18483082)
+
     }
 
 
     private fun checkIntentExtra() {
         if (intent.hasExtra("resId")) {
             val resId = intent.getIntExtra("resId", 0)
-            searchRestaurantById(resId)
+            searchByRestaurantId(resId)
             Log.d(TAG, "checkIntentExtra: $resId")
         } else {
             Toast.makeText(this, "Cannot check the proper restaurant id.", Toast.LENGTH_LONG).show()
         }
     }
 
-    private fun searchRestaurantById(resId: Int) {
+    private fun searchByRestaurantId(resId: Int) {
         mRestaurantViewModel?.searchByRestaurantId(resId)
     }
 
@@ -60,7 +62,7 @@ class RestaurantActivity : BaseActivity() {
 
     private fun subscribeObservers() {
         mRestaurantViewModel?.restaurantDetail?.observe(this, Observer { detailResource ->
-            if (detailResource?.status != null) {
+            if (detailResource != null) {
                 when (detailResource.status) {
                     Resource.Status.SUCCESS -> {
                         detailResource.data?.let { restaurantDetail ->
