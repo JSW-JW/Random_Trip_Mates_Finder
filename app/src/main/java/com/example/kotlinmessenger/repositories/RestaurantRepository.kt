@@ -69,10 +69,11 @@ class RestaurantRepository(val context: Context) {
     }
 
     fun searchByRestaurantId(resId: Int): LiveData<Resource<RestaurantDetail?>?> {
-        return object: NetworkBoundResource<RestaurantDetail, RestaurantResponse>() {
-            override fun saveCallResult(item: RestaurantResponse) {
+        return object: NetworkBoundResource<RestaurantDetail, RestaurantDetail?>() {
+            override fun saveCallResult(item: RestaurantDetail?) {
                 Log.d(TAG, "saveCallResult: called")
-                item.getRestaurant?.let { restaurantDetail ->
+                Log.d(TAG, "saveCallResult: $item")
+                item?.let { restaurantDetail ->
                     Log.d(TAG, "saveCallResult: $restaurantDetail")
                     restaurantDao!!.insertRestaurant(restaurantDetail)
                 }
@@ -87,11 +88,10 @@ class RestaurantRepository(val context: Context) {
                 return restaurantDao!!.searchByRestaurantId(resId)
             }
 
-            override fun createCall(): LiveData<ApiResponse<RestaurantResponse?>?> {
-                Log.d(TAG, "createCall: called")
-                val apiResponse = ServiceGenerator.retrofitService.searchByRestaurantId(resId)
-                Log.d(TAG, "createCall: $apiResponse")
-                return apiResponse
+            override fun createCall(): LiveData<ApiResponse<RestaurantDetail?>?> {
+                val results = ServiceGenerator.retrofitService.searchByRestaurantId(resId)
+                Log.d(TAG, "createCall: called Finally!!")
+                return results
             }
 
         }.asLiveData

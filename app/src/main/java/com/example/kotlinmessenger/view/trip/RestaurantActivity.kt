@@ -1,8 +1,8 @@
 package com.example.kotlinmessenger.view.trip
 
-import android.app.Service
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -10,14 +10,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.kotlinmessenger.R
 import com.example.kotlinmessenger.models.RestaurantDetail
-import com.example.kotlinmessenger.request.ServiceGenerator
 import com.example.kotlinmessenger.util.Resource
 import com.example.kotlinmessenger.view.BaseActivity
 import com.example.kotlinmessenger.viewmodels.RestaurantViewModel
 import kotlinx.android.synthetic.main.activity_restaurant.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class RestaurantActivity : BaseActivity() {
 
@@ -33,11 +29,9 @@ class RestaurantActivity : BaseActivity() {
 
         provideViewModel()
         subscribeObservers()
-       /* checkIntentExtra()*/
-        searchByRestaurantId(18483082)
+        checkIntentExtra()
 
     }
-
 
     private fun checkIntentExtra() {
         if (intent.hasExtra("resId")) {
@@ -82,6 +76,8 @@ class RestaurantActivity : BaseActivity() {
     }
 
     private fun setRestaurantProperties(restaurantDetail: RestaurantDetail) {
+        scroll_parent.visibility = View.VISIBLE
+
         val options: RequestOptions = RequestOptions()
             .placeholder(R.drawable.white_background)
             .error(R.drawable.white_background)
@@ -100,11 +96,11 @@ class RestaurantActivity : BaseActivity() {
 
     private fun setOptions(restaurantDetail: RestaurantDetail) {
         restaurant_r_isGroceryStore.text =
-            if (restaurantDetail.r.is_grocery_store) "true" else "false"
+            if (restaurantDetail.r.is_grocery_store) "Is Grocery Store?: true" else "Is Grocery Store?: false"
         restaurant_r_delivery.text =
-            if (restaurantDetail.r.has_menu_status.delivery != -1) "true" else "false"
+            if (restaurantDetail.r.has_menu_status.delivery != -1) "Delivery?: true" else "Delivery?: false"
         restaurant_r_takeaway.text =
-            if (restaurantDetail.r.has_menu_status.takeaway != -1) "true" else "false"
+            if (restaurantDetail.r.has_menu_status.takeaway != -1) "takeaway?: true" else "takeaway?: false"
 
     }
 

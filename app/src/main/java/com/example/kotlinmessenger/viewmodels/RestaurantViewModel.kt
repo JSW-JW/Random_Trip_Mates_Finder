@@ -8,7 +8,7 @@ import com.example.kotlinmessenger.models.RestaurantSummary
 import com.example.kotlinmessenger.repositories.RestaurantRepository
 import com.example.kotlinmessenger.util.Resource
 
-class RestaurantViewModel(application: Application): AndroidViewModel(application) {
+class RestaurantViewModel(application: Application) : AndroidViewModel(application) {
 
     companion object {
         private const val TAG = "RestaurantViewModel"
@@ -20,10 +20,11 @@ class RestaurantViewModel(application: Application): AndroidViewModel(applicatio
         }
     }
 
-    private val mRestaurantRepository: RestaurantRepository = RestaurantRepository.instance(application)
+    private val mRestaurantRepository: RestaurantRepository =
+        RestaurantRepository.instance(application)
     private val results: MediatorLiveData<Resource<RestaurantDetail?>?> = MediatorLiveData()
 
-    val restaurantDetail: MediatorLiveData<Resource<RestaurantDetail?>?>
+    val restaurantDetail: LiveData<Resource<RestaurantDetail?>?>
         get() = results
 
     fun searchByRestaurantId(resId: Int) {
@@ -33,7 +34,7 @@ class RestaurantViewModel(application: Application): AndroidViewModel(applicatio
     private fun executeSearch(resId: Int) {
         val repositorySource = mRestaurantRepository.searchByRestaurantId(resId)
 
-        results.addSource(repositorySource) { detailResource ->
+        /*results.addSource(repositorySource) { detailResource ->
             if(detailResource != null) {
                 Log.d(TAG, "executeSearch: $detailResource")
                 results.value = detailResource
@@ -42,6 +43,21 @@ class RestaurantViewModel(application: Application): AndroidViewModel(applicatio
             } else {
                 results.removeSource(repositorySource)
             }
+        }*/
+
+        results.addSource(repositorySource) { detailResource ->
+            if (detailResource != null) {
+                results.value = detailResource
+                Log.d(TAG, "onChanged: $detailResource")
+                if(detailResource.status == Resource.Status.SUCCESS) {
+                    results.removeSource(repositorySource)
+                }
+            } else {
+                results.removeSource(repositorySource)
+            }
         }
+
     }
+
+
 }

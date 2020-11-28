@@ -27,7 +27,7 @@ class RestaurantListViewModel(application: Application) : AndroidViewModel(appli
     private val viewState: MutableLiveData<ViewState> = MutableLiveData()
     private val results: MediatorLiveData<Resource<List<RestaurantSummary>?>?> = MediatorLiveData()
 
-    val restaurants: MediatorLiveData<Resource<List<RestaurantSummary>?>?>
+    val restaurants: LiveData<Resource<List<RestaurantSummary>?>?>
         get() = results
 
     init {

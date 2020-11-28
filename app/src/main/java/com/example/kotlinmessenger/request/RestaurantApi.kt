@@ -24,7 +24,7 @@ interface RestaurantApi {
     @GET("restaurant")
     fun searchByRestaurantId(
         @Query("res_id") resId: Int
-    ): LiveData<ApiResponse<RestaurantResponse?>?>
+    ): LiveData<ApiResponse<RestaurantDetail?>?>
 
     @Headers("${Constants.HEADER_KEY}: ${Constants.API_KEY}")
     @GET("search")
@@ -37,5 +37,5 @@ interface RestaurantApi {
     @GET("restaurant")
     fun testApiCall(
         @Query("res_id") resId: Int
-    ): Call<RestaurantDetail>
+    ): Call<RestaurantResponse>
 }

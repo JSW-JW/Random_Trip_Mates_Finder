@@ -2,7 +2,7 @@ package com.example.kotlinmessenger.request.response
 
 import com.example.kotlinmessenger.models.RestaurantDetail
 
-class RestaurantResponse {
+class RestaurantResponse{
 
     private val restaurant: RestaurantDetail? = null
 
@@ -10,3 +10,5 @@ class RestaurantResponse {
         get() = restaurant
 
 }
+
+

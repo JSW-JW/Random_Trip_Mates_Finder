@@ -74,7 +74,6 @@ abstract class NetworkBoundResource<CacheObject, RequestObject> {
             dbSource
         ) { cacheObject -> setValue(loading(cacheObject)) }
         val apiResponse: LiveData<ApiResponse<RequestObject?>?> = createCall()
-        Log.d(TAG, "fetchFromNetwork: $apiResponse")
         results.addSource(
             apiResponse
         ) { requestObjectApiResponse ->
@@ -95,6 +94,7 @@ abstract class NetworkBoundResource<CacheObject, RequestObject> {
                     )
                     // save the response to the local db
                     CoroutineScope(IO).launch {
+                        Log.d(TAG, "fetchFromNetwork: ${requestObjectApiResponse.body}")
                         saveCallResult(requestObjectApiResponse.body as RequestObject)
 
                         withContext(Main) {
@@ -132,6 +132,7 @@ abstract class NetworkBoundResource<CacheObject, RequestObject> {
                     }
                 }
             }
+
         }
     }
 
